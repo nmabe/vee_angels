@@ -1,13 +1,63 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { addReport } from '@/store/contact/contact-reports-slice';
+import {toast} from 'sonner';
 
 export default function ReportForm({ onClose }) {
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const dispatch = useDispatch() ;
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log('report submit', { title, details })
+    if (!title || !details) {
+      toast.error('Please fill in all fields', {
+        description: (
+          <div className="text-sm text-red-700">
+            All fields are required.
+          </div>
+        ),
+        action: {
+          label: 'Dismiss',
+          onClick: () => console.log('Dialog Closed...')
+        },
+        variant: ''
+      })
+      return
+    } else {
+      const formData = { title, details };
+      dispatch(addReport(formData)).then((data) => {
+        if (data?.payload?._id) {
+            toast.success('Report submitted successfully', {
+                description: (
+                    <div className="text-sm text-green-700">
+                        We'll review your report and take appropriate action.
+                    </div>
+                ),
+                action: {
+                    label: 'Dismiss',
+                    onClick: () => console.log('Dialog Closed...')
+                },
+                variant: ''
+            })
+        } else {
+            toast.error('Failed to submit report', {
+                description: (
+                    <div className="text-sm text-red-700">
+                        Please try again later.
+                    </div>
+                ),
+                action: {
+                    label: 'Dismiss',
+                    onClick: () => console.log('Dialog Closed...')
+                },
+                variant: ''
+            })
+        }
+      })
+
+    }
     // TODO: wire to API
     setSubmitted(true)
     setTimeout(() => {

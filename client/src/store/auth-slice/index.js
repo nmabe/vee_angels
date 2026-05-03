@@ -84,7 +84,6 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.user = action.payload.success ? action.payload.user : null;
             state.isAuthenticated = action.payload.success;
-            console.log('User after profile picture update:', action.payload.user);
         }).addCase(authCheck.rejected, (state, action) => {
             state.isLoading = false;
             state.user = null;

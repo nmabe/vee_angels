@@ -14,8 +14,8 @@ import {
 } from '@/store/angels/angels-slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { LoadingSkeleton } from '../common/loading'
-import axios from 'axios'; 
-
+import axios from 'axios'
+import { calculateAge } from '@/pages/admin/vAngelsAdmin'
 
 const getDeviceId = () => {
   let deviceId = localStorage.getItem('deviceId')
@@ -34,6 +34,8 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const [controlButtons, setControlButtons] = React.useState('')
   const [likes, setLikes] = React.useState([])
   const { _id, username, address, profPicUrl } = angel
+  const user = useSelector((state) => state.auth.user)
+  const [controlsOpacityClass, setControlsOpacityClass] = React.useState('')
 
   const dispatch = useDispatch()
   //console.log('Is Liked: ', isLiked);
@@ -54,6 +56,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
 
   const toggleDetails = () => {
     setHideDetails(!hideDetails)
+    console.log(hideDetails);
     setControlsOpacityClass('opacity-100')
     setTimeout(() => {
       setControlsOpacityClass('')
@@ -68,7 +71,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     try {
       const res = await axios.post(
         `http://localhost:5000/api/angels/angels/setView/${angelId}/`,
-        formData,
+        formData
       )
       // Optionally handle success, e.g., show a notification
       if (res.data?.success) {
@@ -85,7 +88,9 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     const viewedKey = `AngelViewed_${angelId}__${device_Id}`
     if (!localStorage.getItem(viewedKey)) {
       localStorage.setItem(viewedKey, '1')
-      const current = Number(localStorage.getItem(`AngelViews_${angelId}`) || '0')
+      const current = Number(
+        localStorage.getItem(`AngelViews_${angelId}`) || '0'
+      )
       localStorage.setItem(`AngelViews_${angelId}`, (current + 1).toString())
       updateViewCount(angelId, device_Id)
     }
@@ -122,7 +127,6 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
               style={{ '--angelImage': `url(${pic})` }}
               className="embla_slide bg-[image:var(--angelImage)]  bg-no-repeat w-full h-full bg-cover object-cover"
               onDoubleClick={toggleDetails}
-              onTouchStart={toggleDetails}
             ></div>
           ))}
         </div>
@@ -144,47 +148,69 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
 
             {/* Bio */}
             <h2 className="text-2xl text-purple-900 font-semibold mb-0">
-              {address?.city}
+              {user?.role === 'admin'
+                ? `${calculateAge(angel?.dateOfBirth)} years`
+                : angel.address?.city}
             </h2>
 
             {/* Stats and Button Row */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="text-center">
-                  <div className="text-l leading-none font-semibold text-red-600">
-                    {angelLikes}
-                  </div>
-                  <div className="text-sm leading-none font-semibold text-pink-700">
-                    Like{angelLikes !== 1 ? 's' : ''}
-                  </div>
-                  {isLiked ? (
-                    <Heart
-                      className="w-5 h-5 text-red-400 mx-auto mt-1 cursor-pointer drop-shadow-lg animate-pulse"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        handleLike()
-                      }}
-                    />
-                  ) : (
-                    <Heart
-                      className="w-5 h-5 text-pink-300 mx-auto mt-1 cursor-pointer transition-all hover:scale-125 hover:drop-shadow-lg"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        handleLike()
-                      }}
-                    />
-                  )}
+              {user?.role === 'admin' ? (
+                <div className="p-2 bg-gray-200 rounded-lg text-sm text-gray-800">
+                  <span className="font-bold">New Angel Profile: </span>
+                  <span className="font-bold"> Address: </span>
+                  <ul>
+                    {Object.values(angel?.address).map((addr, index) => (
+                      <li key={index}>{addr}</li>
+                    ))}
+                  </ul>
+                  <span className="font-bold"> Bio: </span>
+
+                  <p className="text-sm text-gray-600 mt-1">{angel?.bio}</p>
+                  <span className="font-bold"> Price: </span>
+                  <h4>R{angel?.price}</h4>
+                  <span className="font-bold"> Phone Number: </span>
+                  <h4>0{angel?.phoneNumber}</h4>
                 </div>
-                <div className="text-center">
-                  <div className="text-l leading-none font-semibold text-red-600">
-                    {angel?.views || 0}
+              ) : (
+                <div className="flex items-center gap-4">
+                  <div className="text-center">
+                    <div className="text-l leading-none font-semibold text-red-600">
+                      {angelLikes}
+                    </div>
+                    <div className="text-sm leading-none font-semibold text-pink-700">
+                      Like{angelLikes !== 1 ? 's' : ''}
+                    </div>
+                    {isLiked ? (
+                      <Heart
+                        className="w-5 h-5 text-red-400 mx-auto mt-1 cursor-pointer drop-shadow-lg animate-pulse"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleLike()
+                        }}
+                      />
+                    ) : (
+                      <Heart
+                        className="w-5 h-5 text-pink-300 mx-auto mt-1 cursor-pointer transition-all hover:scale-125 hover:drop-shadow-lg"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleLike()
+                        }}
+                      />
+                    )}
                   </div>
-                  <div className="text-sm leading-none font-semibold text-pink-700">
-                    Views
+                  <div className="text-center">
+                    <div className="text-l leading-none font-semibold text-red-600">
+                      {angel?.views || 0}
+                    </div>
+                    <div className="text-sm leading-none font-semibold text-pink-700">
+                      Views
+                    </div>
+                    <Eye className="w-5 h-5 text-[#892f82cc] mx-auto mt-1 transition-all drop-shadow-lg" />
                   </div>
-                  <Eye className="w-5 h-5 text-[#892f82cc] mx-auto mt-1 transition-all drop-shadow-lg" />
                 </div>
-              </div>
+              )}
+
               <div className=" ">
                 <div className="embla_controls ">
                   <div className="embla_buttons ">
@@ -218,7 +244,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
         </div>
       ) : (
         <div
-          className={`${controlsOpacityClass} absolute top-0 left-[1%] w-full h-full flex flex-col justify-end  space-y-2 z-100 hover:opacity-100 opacity-0 transition-opacity duration-300`}
+          className={`${controlsOpacityClass} absolute top-[45%] border-blue-600 left-[1%] w-full h-[3rem] flex flex-col justify-end  space-y-2 z-100 hover:opacity-100 opacity-0 transition-opacity duration-300`}
         >
           <div className="embla_controlsa">
             <div className="embla_buttons2">

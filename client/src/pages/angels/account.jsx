@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import { changePassword, changeProfilePic } from '@/store/angels/user-slice'
 import { toast } from 'sonner'
 import { signOutUser } from '@/store/auth-slice'
-import UploadProfPic from '@/components/v-angels/uploadProfPic';
+import UploadProfPic from '@/components/v-angels/uploadProfPic'
+import Distance from '@/components/common/distance'
 
 export default function AngelsAccountPage() {
   // Example initial state, replace with real user data as needed
@@ -15,9 +16,9 @@ export default function AngelsAccountPage() {
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordAgain, setNewPasswordAgain] = useState('')
   const [saving, setSaving] = useState(false)
-  const dispatch = useDispatch();
-  const [loadingState, setLoadingState] = useState(false);
-  const [uploadedImage, setUploadedImageFile] = useState(null);
+  const dispatch = useDispatch()
+  const [loadingState, setLoadingState] = useState(false)
+  const [uploadedImage, setUploadedImageFile] = useState(null)
 
   // Notifications state
   const [notifications, setNotifications] = useState([
@@ -218,6 +219,8 @@ export default function AngelsAccountPage() {
             )}
           </div>
         </div>
+
+        <Distance />
       </div>
     </div>
   )

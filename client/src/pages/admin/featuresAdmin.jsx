@@ -17,31 +17,14 @@ import { getApplications, rejectApplication, approveApplication } from '@/store/
 import { toast } from 'sonner';
 import AngelPopUpCard from '@/components/v-angels/angelPopUpCard'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import TimeAgo from 'javascript-time-ago'
-// English.
-import en from 'javascript-time-ago/locale/en'
+import { getReports, deleteReport } from '@/store/contact/contact-reports-slice';
+import { getMessages, deleteMessage } from '@/store/contact/contact-slice';
+import { use } from 'react'
 
 //TimeAgo.addDefaultLocale(en)
 
 // Create formatter (English).
 //const timeAgo = new TimeAgo('en-US');
-
-const reports = [
-  {
-    id: 1,
-    user: 'Thulani FKP',
-    issue: 'Inappropriate message',
-    status: 'Pending',
-    date: '2025-05-03'
-  },
-  {
-    id: 2,
-    user: 'Zanele',
-    issue: 'Profile photo issue',
-    status: 'Resolved',
-    date: '2025-05-01'
-  }
-]
 
 const activities = [
   {
@@ -66,13 +49,23 @@ const activities = [
   }
 ]
 
+
+
 export default function FeaturesAdminPage() {
   const newAngels = useSelector((state) => state.applications.applications)
   const dispatch = useDispatch()
   const [reportList, setReportList] = useState([]); 
+const messages = useSelector((state) => state.contact.messages);
+
 
   useEffect(() => {
     dispatch(getApplications())
+    dispatch(getReports()).then((data) => {
+      if (data?.payload?.reports) {
+        setReportList(data.payload.reports);
+      }
+    });
+    dispatch(getMessages());  
   }, [dispatch])
 
   
@@ -139,7 +132,6 @@ export default function FeaturesAdminPage() {
     // Add backend call here
   }
 
-  console.log('Applications retrieved: ', newAngels.length);
   
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#0f1021] via-[#23243a] to-[#1a1b2f] relative overflow-hidden flex flex-col">
@@ -252,13 +244,13 @@ export default function FeaturesAdminPage() {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="font-bold text-pink-100 truncate">
-                          {report.user}
+                          {report.title}
                         </div>
                         <div className="text-xs text-pink-400 truncate">
                           {report.issue}
                         </div>
                         <div className="text-xs text-pink-400">
-                          Date: {report.date}
+                          Date: {report.createdAt}
                         </div>
                       </div>
                       <span

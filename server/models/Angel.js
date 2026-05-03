@@ -36,7 +36,7 @@ const angelSchema = new mongoose.Schema({
     },
     travel: {
       type: String,
-      enum: ['Host', 'Travel', 'Both'],
+      enum: ['Host', 'Travel', 'Host & Travel'],
       default: 'Host'
     },
     address: {

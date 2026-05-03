@@ -1,19 +1,55 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { sendMessage } from '@/store/contact/contact-slice';
+import {toast} from 'sonner';
 
 export default function ContactForm({ onClose }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const dispatch = useDispatch()
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log('contact submit', { name, email, message })
+    const formData = { name, email, message };
+    dispatch(sendMessage(formData)).then((data) => {
+        if (data?.payload?.success) {
+            toast.success('Message sent successfully', {
+                description: (
+                    <div className="text-sm text-green-700">
+                        We'll get back to you soon.
+                    </div>
+                ),
+                action: {
+                    label: 'Dismiss',
+                    onClick: () => console.log('Dialog Closed...')
+                },
+                variant: ''
+            })
+              setSubmitted(true)
+              setTimeout(() => {
+                if (onClose) onClose()
+              }, 900)
+        } else {
+            toast.error('Failed to send message', {
+                description: (
+                    <div className="text-sm text-red-700">
+                        Please try again later.
+                    </div>
+                ),
+                action: {
+                    label: 'Dismiss',
+                    onClick: () => console.log('Dialog Closed...')
+                },
+                variant: ''
+            })
+        }
+
+    });
+
     // TODO: wire to API
-    setSubmitted(true)
-    setTimeout(() => {
-      if (onClose) onClose()
-    }, 900)
+
   }
 
   return (

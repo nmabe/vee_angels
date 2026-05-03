@@ -5,7 +5,7 @@ import {
   Info,
   Heart,
   HeartOff,
-  Star,
+  Caravan,
   CalendarArrowUp,
   CircleDollarSign,
   MapPinned,
@@ -32,7 +32,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
     username,
     address,
     profPicUrl,
-    rating,
+    travel,
     dateOfBirth,
     price,
     bio,
@@ -141,7 +141,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
         <Dialog className="">
           <DialogTrigger asChild>
             <div
-              style={{ '--image-url': `url(${profPicUrl[randomNumber]})` }}
+              style={{ '--image-url': `url(${profPicUrl[0]})` }}
               className=" w-full h-[85%] rounded-[1px] bg-[image:var(--image-url)] bg-size-[100%] object-cover bg-no-repeat bg-cover bg-opacity-30"
             ></div>
           </DialogTrigger>
@@ -189,6 +189,13 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
           <Info className="absolute top-[85px] right-[85px] text-white opacity-100 group-hover:opacity-[0] transition-all delay-300 duration-500 ease-in-out transition-[opacity]" />
           <div className="w-full h-full p-4 opacity-[0] group-hover:opacity-100 text-white text-sm transition-all transition-[opacity] delay-500 duration-500 overflow-y-auto bg-gradient-to-br from-gray-900 to-gray-800">
             <ul className="list-none p-0 m-0 mb-2 space-y-4">
+              <li className="mb-0 P-2 BG-[#f1f1f1] rounded-lg overflow-hidden">
+                <span className="font-bold">
+                  <Info className="inline w-[15px] h-[15px] mr-1" />
+                  Bio:{' '}
+                </span>
+                {bio}
+              </li>
               <li>
                 <span className="font-bold">
                   <CalendarArrowUp className="inline w-[15px] h-[15px] mr-1" />
@@ -212,17 +219,17 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
               </li>
               <li>
                 <span className="font-bold">
+                  <Caravan className="inline w-[15px] h-[15px] mr-1" />
+                  Visit:{' '}
+                </span>
+                {travel}  
+              </li>
+              <li>
+                <span className="font-bold">
                   <PhoneCall className="inline w-[15px] h-[15px] mr-1" />
                   Contact:{' '}
                 </span>
                 0{phoneNumber}
-              </li>
-              <li className="mb-0 P-2 BG-[#f1f1f1] rounded-lg overflow-hidden">
-                <span className="font-bold">
-                  <Info className="inline w-[15px] h-[15px] mr-1" />
-                  Bio:{' '}
-                </span>
-                {bio}
               </li>
               {/* Add more details as needed */
               /*

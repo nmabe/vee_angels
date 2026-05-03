@@ -7,6 +7,7 @@ const adminAngelsRouter = require('./routes/admin/angelsRoutes');
 const angelsRouter = require('./routes/angels/angelsRoutes');
 const userRouter = require('./routes/user/userRoutes');
 const applicationRouter = require('./routes/applicatiions/applicationRoutes');
+const contactRouter = require('./routes/contact/contactRoutes');
 require('dotenv').config();
 
 
@@ -32,6 +33,7 @@ app.use('/api/admin/angels', adminAngelsRouter);
 app.use('/api/angels/angels', angelsRouter);
 app.use('/api/user', userRouter);
 app.use('/api/applications', applicationRouter);
+app.use('/api/contact', contactRouter);
 
 (async () => {
     try {

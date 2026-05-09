@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useDispatch, useSelector } from 'react-redux'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui/button'
-import { Menu, User, LogOut, Heart, LogInIcon } from 'lucide-react'
+import { Menu, User, LogOut, Heart, LogInIcon, Info } from 'lucide-react'
 import { angelHeaderMenuItems } from '@/config'
 import {
   DropdownMenu,
@@ -152,12 +152,10 @@ export default function AngelHeader() {
           <MenuNavSections />
         </div>
         <div className="hidden lg:flex items-center gap-4">
-          <button
+          <Info
             onClick={() => setHelpOpen(true)}
-            className="text-sm font-medium hover:text-[#892f82]"
-          >
-            Help
-          </button>
+            className="text-sm font-medium hover:text-[#892f82] hover:cursor-pointer"
+          />
           <div className="hidden lg:block">
             <RightUserMenuNavSection />
           </div>

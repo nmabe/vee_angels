@@ -11,7 +11,7 @@ import { ArrowUpDownIcon } from 'lucide-react'
 import { sortOptions } from '@/config'
 import { AngelCard } from '@/components/v-angels/angelCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { fetchFilteredAngels, getLikes } from '@/store/angels/angels-slice'
 import { createSearchParams, useSearchParams, Link } from 'react-router-dom'
 import SearchBar from 'react-js-search'
@@ -31,65 +31,62 @@ const AngelsListingPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [itemOffset, setItemOffset] = useState(0)
 
-  const itemsPerPage = 24
-  const sortedAngels = [...angels].sort((a, b) =>
-    (a.username || '').localeCompare(b.username || '')
+  const itemsPerPage = 24;
+
+  const sortedAngels = useMemo(
+    () =>
+      [...(Array.isArray(angels) ? angels : [])].sort((a, b) =>
+        (a.username || '').localeCompare(b.username || '')
+      ),
+    [angels]
   )
+
   const endOffset = itemOffset + itemsPerPage
   const currentItems = sortedAngels.slice(itemOffset, endOffset)
   const pageCount = Math.ceil(sortedAngels.length / itemsPerPage)
 
+  const handleFilter = (sectionId, selectedOption) => {
+    const filtersCopy = { ...filter }
+
+    if (!filtersCopy[sectionId]) {
+      filtersCopy[sectionId] = [selectedOption]
+    } else {
+      const indexOfSelectedOption =
+        filtersCopy[sectionId].indexOf(selectedOption)
+
+      if (indexOfSelectedOption === -1) {
+        filtersCopy[sectionId] = [
+          ...filtersCopy[sectionId],
+          selectedOption
+        ]
+      } else {
+        filtersCopy[sectionId] = filtersCopy[sectionId].filter(
+          (item) => item !== selectedOption
+        )
+      }
+    }
+
+    setFilter(filtersCopy)
+  }
+
   const handlePageClick = (event) => {
-    const newOffset = event.selected * itemsPerPage
+    const newOffset =
+      (event.selected * itemsPerPage) % sortedAngels.length
     setItemOffset(newOffset)
   }
 
-  const createSearchParamsHelper = (filter) => {
-    const queryParams = []
-
-    for (const [key, value] of Object.entries(filter)) {
-      if (Array.isArray(value) && value.length > 0) {
-        const filterValues = value.join(',')
-
-        queryParams.push(`${key}=${encodeURIComponent(filterValues)}`)
-      }
+  // Helper to safely parse JSON
+  const safeParse = (value, fallback = {}) => {
+    try {
+      return value ? JSON.parse(value) : fallback
+    } catch {
+      return fallback
     }
-    return queryParams.join('&')
   }
-
-  const handleFilter = (getSectionId, getCurrentOption) => {
-    let filtersCopy = { ...filter }
-    const indexOfCurrentSection = Object.keys(filtersCopy).indexOf(getSectionId)
-
-    if (indexOfCurrentSection === -1) {
-      filtersCopy = {
-        ...filtersCopy,
-        [getSectionId]: [getCurrentOption]
-      }
-    } else {
-      const indexOfCurrentOption =
-        filtersCopy[getSectionId].indexOf(getCurrentOption)
-
-      if (indexOfCurrentOption === -1) {
-        filtersCopy[getSectionId].push(getCurrentOption)
-      } else {
-        filtersCopy[getSectionId].splice(indexOfCurrentOption, 1)
-      }
-    }
-    setFilter(filtersCopy)
-    sessionStorage.setItem('filters', JSON.stringify(filtersCopy))
-  }
-
-  useEffect(() => {
-    if (filter && Object.keys(filter).length > 0) {
-      const queryString = createSearchParamsHelper(filter)
-      setSearchParams(new URLSearchParams(queryString))
-    }
-  }, [filter])
 
   useEffect(() => {
     setSort('newest')
-    setFilter(JSON.parse(sessionStorage.getItem('filters')) || {})
+    setFilter(safeParse(sessionStorage.getItem('filters')) || {})
   }, [])
 
   useEffect(() => {
@@ -103,7 +100,11 @@ const AngelsListingPage = () => {
   useEffect(() => {
     const fetchLikes = async () => {
       const res = await dispatch(getLikes(user?.id || 0))
-      setLikes(res.payload)
+      if (res && res.payload && Array.isArray(res.payload.likes)) {
+        setLikes(res.payload)
+      } else {
+        setLikes({ likes: [] })
+      }
     }
     fetchLikes()
   }, [dispatch, user])
@@ -131,10 +132,10 @@ const AngelsListingPage = () => {
   }, [searchTerm, angelsList])
   // --- END SEARCH FUNCTIONALITY ---
 
-  // Reset pagination offset when the underlying list or search changes
+  // Reset pagination offset when the underlying list, search, filter, or sort changes
   useEffect(() => {
     setItemOffset(0)
-  }, [angelsList, searchTerm])
+  }, [angelsList, searchTerm, filter, sort])
 
   return (
     <div className="min-h-screen font-inter text-gray-900 bg-gradient-to-br from-white via-purple-50 to-pink-50">
@@ -188,17 +189,19 @@ const AngelsListingPage = () => {
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <span className="text-gray-600 font-semibold bg-purple-100 px-2 py-1 rounded-full text-sm">
-                  {angels?.length} Angels
-                </span>
               </div>
             </div>
-            <SearchBar
-              className="flex flex-1 w-full"
-              placeHolderText={'Search here...'}
-              data={angelsList}
-              onSearchTextChange={setSearchTerm}
-            />
+            <div className="p-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <SearchBar
+                className="flex flex-1 w-full"
+                placeHolderText={'Search here...'}
+                data={angels}
+                onSearchTextChange={setSearchTerm}
+              />
+              <span className="text-gray-600 font-semibold bg-purple-100 px-4 py-2 rounded-full text-xs flex justify-center w-max">
+                {(angels && angels.length) ? angels.length : 0} Angels
+              </span>
+            </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 p-3">
               {currentItems && currentItems.length > 0 ? (
                 currentItems.map((angel) => (

@@ -1,5 +1,5 @@
 const express = require('express');
-const { fetchFilteredAngels, likeAngel, unlikeAngel, getLikes, getComments, addComment, getAllLikes, setView } = require('../../controllers/angels/angelsController');
+const { fetchFilteredAngels, likeAngel, unlikeAngel, getLikes, getComments, addComment, getAllLikes, setView, resetViews } = require('../../controllers/angels/angelsController');
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.get('/comments/:id', getComments);
 router.post('/comments/:id', addComment);
 router.get('/allLikes', getAllLikes);
 router.post('/setView/:id', setView);
+router.post('/resetView/', resetViews);
 
 module.exports = router;

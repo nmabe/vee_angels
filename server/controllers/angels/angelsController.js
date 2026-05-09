@@ -269,6 +269,18 @@ const setView = async (req, res) => {
     }
 }
 
+const resetViews = async (req, res) => {
+    try {
+        await Angel.updateMany({}, { $set: { views: 0 } });
+        res.status(200).json({ 
+            success: true,
+            message: 'View counts reset successfully' });
+    } catch (error) {
+        console.error(error);
+        return res.json({ 
+            success: false,
+            message: 'Server error' });
+    }
+}
 
-
-module.exports = { fetchFilteredAngels, likeAngel, unlikeAngel, getLikes, getComments, addComment, getAllLikes, setView};
+module.exports = { fetchFilteredAngels, likeAngel, unlikeAngel, getLikes, getComments, addComment, getAllLikes, setView, resetViews};

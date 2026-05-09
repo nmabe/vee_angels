@@ -6,7 +6,6 @@ import { changePassword, changeProfilePic } from '@/store/angels/user-slice'
 import { toast } from 'sonner'
 import { signOutUser } from '@/store/auth-slice'
 import UploadProfPic from '@/components/v-angels/uploadProfPic'
-import Distance from '@/components/common/distance'
 
 export default function AngelsAccountPage() {
   // Example initial state, replace with real user data as needed
@@ -220,7 +219,6 @@ export default function AngelsAccountPage() {
           </div>
         </div>
 
-        <Distance />
       </div>
     </div>
   )

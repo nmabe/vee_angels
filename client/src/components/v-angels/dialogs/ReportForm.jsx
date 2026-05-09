@@ -1,21 +1,27 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { addReport } from '@/store/contact/contact-reports-slice';
-import {toast} from 'sonner';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addReport } from '@/store/contact/contact-reports-slice'
+import { toast } from 'sonner'
+import { authCheck } from '@/store/auth-slice'
+import { LoadingSkeleton } from '@/components/common/loading'
 
 export default function ReportForm({ onClose }) {
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const dispatch = useDispatch() ;
+  const dispatch = useDispatch();
+  
+  const { isAuthenticated, user, isLoading } = useSelector(
+      (state) => state.auth
+  )
 
   function handleSubmit(e) {
     e.preventDefault()
-    if (!title || !details) {
-      toast.error('Please fill in all fields', {
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to submit a report', {
         description: (
           <div className="text-sm text-red-700">
-            All fields are required.
+            Please log in or create an account to submit your report.
           </div>
         ),
         action: {
@@ -25,44 +31,67 @@ export default function ReportForm({ onClose }) {
         variant: ''
       })
       return
+    }
+    if (!title || !details) {
+      toast.error('Please fill in all fields', {
+        description: (
+          <div className="text-sm text-red-700">All fields are required.</div>
+        ),
+        action: {
+          label: 'Dismiss',
+          onClick: () => console.log('Dialog Closed...')
+        },
+        variant: ''
+      })
+      return
     } else {
-      const formData = { title, details };
+      // Replace 'targetId' with the correct user ID (e.g., targetUserId if reporting another user)
+      // Example: const formData = { targetId: targetUserId, reporterId: user?._id, title, details }
+      const formData = { targetId: user?.id, title, details }
       dispatch(addReport(formData)).then((data) => {
-        if (data?.payload?._id) {
-            toast.success('Report submitted successfully', {
-                description: (
-                    <div className="text-sm text-green-700">
-                        We'll review your report and take appropriate action.
-                    </div>
-                ),
-                action: {
-                    label: 'Dismiss',
-                    onClick: () => console.log('Dialog Closed...')
-                },
-                variant: ''
-            })
+        if (data?.payload?.success) {
+          toast.success('Report submitted successfully', {
+            description: (
+              <div className="text-sm text-green-700">
+                We'll review your report and take appropriate action.
+              </div>
+            ),
+            action: {
+              label: 'Dismiss',
+              onClick: () => console.log('Dialog Closed...')
+            },
+            variant: ''
+          })
+          // TODO: wire to API
+          setSubmitted(true)
+          setTimeout(() => {
+            if (onClose) onClose()
+          }, 900)
         } else {
-            toast.error('Failed to submit report', {
-                description: (
-                    <div className="text-sm text-red-700">
-                        Please try again later.
-                    </div>
-                ),
-                action: {
-                    label: 'Dismiss',
-                    onClick: () => console.log('Dialog Closed...')
-                },
-                variant: ''
-            })
+          toast.error('Failed to submit report', {
+            description: (
+              <div className="text-sm text-red-700">
+                Please try again later.
+              </div>
+            ),
+            action: {
+              label: 'Dismiss',
+              onClick: () => console.log('Dialog Closed...')
+            },
+            variant: ''
+          })
         }
       })
-
     }
-    // TODO: wire to API
-    setSubmitted(true)
-    setTimeout(() => {
-      if (onClose) onClose()
-    }, 900)
+  }
+
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('ReportForm rendered with user:', user, 'isAuthenticated:', isAuthenticated);
+  }
+
+  if (isLoading) {
+    return <LoadingSkeleton />;
   }
 
   return (
@@ -118,5 +147,6 @@ export default function ReportForm({ onClose }) {
         </div>
       )}
     </div>
-  )
+  );
 }
+

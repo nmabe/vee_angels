@@ -10,7 +10,8 @@ import {
   Download,
   CheckCircle2,
   XCircle,
-  Activity
+  Activity,
+  EyeOff
 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getApplications, rejectApplication, approveApplication } from '@/store/applications/applications-slice'
@@ -19,7 +20,7 @@ import AngelPopUpCard from '@/components/v-angels/angelPopUpCard'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { getReports, deleteReport } from '@/store/contact/contact-reports-slice';
 import { getMessages, deleteMessage } from '@/store/contact/contact-slice';
-import { use } from 'react'
+import axios from 'axios'
 
 //TimeAgo.addDefaultLocale(en)
 
@@ -68,6 +69,7 @@ const messages = useSelector((state) => state.contact.messages);
     dispatch(getMessages());  
   }, [dispatch])
 
+  console.log('messages :', messages );
   
   const handleApprove = (id) => {
     console.log('Approving application with id:', id);
@@ -130,6 +132,49 @@ const messages = useSelector((state) => state.contact.messages);
       prev.map((r) => (r.id === id ? { ...r, status: 'Resolved' } : r))
     )
     // Add backend call here
+  }
+
+  const resetViews = async () => {
+    // Add backend call here to reset views
+    try {
+      const res = await axios.post('http://localhost:5000/api/angels/angels/resetView/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+        if (res.data?.success) {
+          
+          toast.success('View counts reset successfully', {
+            description: 'All angel view counts have been reset.',
+            action: {
+              label: 'Dismiss',
+              onClick: () => console.log('Closed')
+            }
+          })
+        } else {
+          console.error('Failed to reset view counts:', res);
+          toast.warning('Failed to reset view counts.', {
+            description: 'Something went wrong while resetting views.',
+            action: {
+              label: 'Dismiss',
+              onClick: () => console.log('Closed')
+            },
+            variant: 'destructive'
+          })
+        }
+    }
+       catch(error) {
+        toast.error('An error occurred.', {
+          description: 'Unable to reset view counts.',
+          action: {
+            label: 'Dismiss',
+            onClick: () => console.log('Closed error', error)
+          },
+          variant: 'destructive'
+        })
+      }
   }
 
   
@@ -343,17 +388,17 @@ const messages = useSelector((state) => state.contact.messages);
           {/* Export Data */}
           <Card className="rounded-2xl bg-gradient-to-br from-[#23243a] to-[#1a1b2f] border border-cyan-400/10 shadow-xl">
             <CardHeader className="flex flex-row items-center gap-3 pb-1">
-              <Download className="w-6 h-6 text-cyan-400 drop-shadow-glow" />
+              <EyeOff className="w-6 h-6 text-cyan-400 drop-shadow-glow" />
               <CardTitle className="text-lg font-semibold text-cyan-100 tracking-wider">
-                Export Data
+                Reset Views
               </CardTitle>
             </CardHeader>
             <CardContent>
               <Button
                 className="w-full bg-cyan-400 text-[#23243a] hover:bg-cyan-300 rounded-lg px-3 py-2 font-bold"
-                onClick={() => alert('Export started')}
+                onClick={() => resetViews()}
               >
-                Export as CSV
+                Reset Views
               </Button>
             </CardContent>
           </Card>

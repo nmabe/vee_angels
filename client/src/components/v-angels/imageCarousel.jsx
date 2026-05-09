@@ -75,6 +75,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
       )
       // Optionally handle success, e.g., show a notification
       if (res.data?.success) {
+        console.log('View count updated successfully for angel:', username);
         // View count updated successfully
       }
     } catch (error) {
@@ -86,16 +87,14 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const handleAngelView = (angelId) => {
     const device_Id = getDeviceId()
     const viewedKey = `AngelViewed_${angelId}__${device_Id}`
-    if (!localStorage.getItem(viewedKey)) {
-      localStorage.setItem(viewedKey, '1')
-      const current = Number(
-        localStorage.getItem(`AngelViews_${angelId}`) || '0'
-      )
-      localStorage.setItem(`AngelViews_${angelId}`, (current + 1).toString())
+    const angelsViewed = localStorage.getItem(viewedKey);
+    console.log('Checking view for:', angelsViewed, 'Angel views:', viewedKey)
+    if (!angelsViewed) {
+      localStorage.setItem(viewedKey, 'true');
       updateViewCount(angelId, device_Id)
     }
   }
-
+  
   useEffect(() => {
     if (inView && _id) {
       handleAngelView(_id)

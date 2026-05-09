@@ -27,6 +27,7 @@ import { getAngels } from '@/store/admin/angel-slice'
 import { getUsers } from '@/store/angels/user-slice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { getReports } from '@/store/contact/contact-reports-slice'
 
 
 ChartJS.register(
@@ -43,10 +44,12 @@ export default function DashboardAdminPage() {
     const signUps = useSelector((state) => state.applications.applications)
     const { angelsList } = useSelector((state) => state.adminAngel)
     const { users } = useSelector((state) => state.users)
-  const navigate = useNavigate();
+    const reports  = useSelector((state) => state.reports.reports.reports)
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
+    console.log('Reports:', reports);
 
   // Mock data for demonstration
   const stats = [
@@ -80,7 +83,7 @@ export default function DashboardAdminPage() {
     },
     {
       label: 'Reports',
-      value: 3,
+      value: reports?.length ?? 0,
       icon: <AlertCircle className="w-5 h-5 text-pink-400 drop-shadow-glow" />
     },
     {
@@ -104,26 +107,6 @@ export default function DashboardAdminPage() {
     }
   ])
 
-  const [recentReports] = useState([
-    {
-      user: 'Angel Kabza',
-      issue: 'Inappropriate message',
-      status: 'Pending',
-      time: '1 hour ago'
-    },
-    {
-      user: 'User Thulani',
-      issue: 'Profile photo issue',
-      status: 'Resolved',
-      time: 'Yesterday'
-    },
-    {
-      user: 'Angel Zanele',
-      issue: 'Spam report',
-      status: 'Pending',
-      time: '2 days ago'
-    }
-  ])
 
   // Chart data
   const lineData = {
@@ -189,6 +172,7 @@ export default function DashboardAdminPage() {
     dispatch(getApplications());
     dispatch(getAngels());
     dispatch(getUsers());
+    dispatch(getReports());
   }, [dispatch]);
 
   return (
@@ -304,13 +288,13 @@ export default function DashboardAdminPage() {
             Recent Reports
           </h2>
           <ul className="divide-y divide-pink-900/40">
-            {recentReports.map((report, idx) => (
+            {reports?.map((report, idx) => (
               <li
                 key={idx}
                 className="py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1"
               >
                 <span className="text-pink-100">
-                  <b>{report.user}</b>: {report.issue}
+                  <b>{report.title}</b>: {report.details}
                 </span>
                 <span
                   className={`text-xs font-semibold ${
@@ -321,7 +305,7 @@ export default function DashboardAdminPage() {
                 >
                   {report.status}
                 </span>
-                <span className="text-xs text-pink-400">{report.time}</span>
+                <span className="text-xs text-pink-400">{report.createdAt}</span>
               </li>
             ))}
           </ul>

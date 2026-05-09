@@ -45,7 +45,7 @@ export default function UploadImage({imageFiles, setImageFiles, UploadedImage, s
             imageFiles.forEach((file) => {
               formData.append('avatars', file); // Append files under 'images' key
             });
-            const response = await axios.post('http://localhost:5000/api/admin/angels/uploadImage', formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/angels/uploadImage`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             if (response.data?.success){

@@ -22,6 +22,7 @@ import { getReports, deleteReport } from '@/store/contact/contact-reports-slice'
 import { getMessages, deleteMessage } from '@/store/contact/contact-slice';
 import axios from 'axios'
 
+
 //TimeAgo.addDefaultLocale(en)
 
 // Create formatter (English).
@@ -137,7 +138,7 @@ const messages = useSelector((state) => state.contact.messages);
   const resetViews = async () => {
     // Add backend call here to reset views
     try {
-      const res = await axios.post('http://localhost:5000/api/angels/angels/resetView/', {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/angels/angels/resetView/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

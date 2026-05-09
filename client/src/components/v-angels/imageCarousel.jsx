@@ -70,7 +70,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     formData.append('deviceId', deviceId)
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/angels/angels/setView/${angelId}/`,
+        `${import.meta.env.VITE_API_URL}/api/angels/angels/setView/${angelId}/`,
         formData
       )
       // Optionally handle success, e.g., show a notification
@@ -94,7 +94,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
       updateViewCount(angelId, device_Id)
     }
   }
-  
+
   useEffect(() => {
     if (inView && _id) {
       handleAngelView(_id)

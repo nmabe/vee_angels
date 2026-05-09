@@ -10,7 +10,6 @@ import { set } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { authCheck } from '@/store/auth-slice'
 
-
 export default function UploadProfPic({ user, loadingState, setLoadingState, uploadedImage, setUploadedImage }) {
   const inputRef = useRef(null);
   const [fileUrl, setFileUrl ] = useState('');
@@ -59,7 +58,7 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
       formData.append('user_avatar', uploadedImage); // Append files under 'images' key
       
       const res = await axios.post(
-        `http://localhost:5000/api/user/uploadProfilePic/${user.id}/`,
+        `${import.meta.env.VITE_API_URL}/api/user/uploadProfilePic/${user.id}/`,
         formData,
         {
           withCredentials: true,

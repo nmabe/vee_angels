@@ -8,7 +8,7 @@ const AuthLayout = ()  => {
             <div className="max-w-md space-y-6 text-center text-primary-foreground">
 
             <Avatar className="mx-auto w-[250px] h-[250px]">
-                <AvatarImage  src="https://res.cloudinary.com/dddjh584x/image/upload/v1775337043/veeAngelsLogo-bg_pjb29t.png" />
+                <AvatarImage  src="https://res.cloudinary.com/dddjh584x/image/upload/v1778347938/veeAngelsLogo-bg_su3osc.png" />
                     <AvatarFallback>V-A</AvatarFallback>
                 </Avatar>
 

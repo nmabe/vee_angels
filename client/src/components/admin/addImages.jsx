@@ -3,6 +3,7 @@ import { UploadCloudIcon } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
+
 const AddImages = ({ angelId, onImagesAdded,multiple = true }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -48,7 +49,7 @@ const AddImages = ({ angelId, onImagesAdded,multiple = true }) => {
                 formData.append('avatars', file);
             }
             
-            const res = await axios.post('http://localhost:5000/api/admin/angels/uploadImage', formData, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/angels/uploadImage`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             

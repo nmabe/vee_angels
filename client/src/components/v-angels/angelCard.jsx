@@ -83,7 +83,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => sed...'
+              onClick: () => {}
             }
           })
         } else {

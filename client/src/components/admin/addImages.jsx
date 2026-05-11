@@ -55,7 +55,6 @@ const AddImages = ({ angelId, onImagesAdded,multiple = true }) => {
             
             if (res.data?.success) {
                 const uploadedImages = res.data.ret.map(obj => obj.url);
-                console.log(uploadedImages);
                 onImagesAdded(uploadedImages);
                 
             }
@@ -66,7 +65,6 @@ const AddImages = ({ angelId, onImagesAdded,multiple = true }) => {
                 action: {
                 label: 'Dismiss',
                 onClick: () => {
-                console.log('Dismissing it....')
                 }}
             })
             setError('Failed to upload images.');

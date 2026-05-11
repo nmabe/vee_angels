@@ -43,7 +43,6 @@ export const getApplications = createAsyncThunk(
 export const rejectApplication = createAsyncThunk(
   '/applications/reject/',
   async ({ id, profPicUrl }) => {
-    console.log('Rejecting application with id:', id, profPicUrl)
     const res = await axios.delete(
       `${API_URL}/api/applications/reject/${id}`,
       profPicUrl

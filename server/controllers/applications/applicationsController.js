@@ -93,8 +93,7 @@ const approveApplication = async (req,res) => {
 const rejectApplication = async (req, res) => {
     const { id } = req.params;
     const { profPicUrl } = req.body;
-    console.log(profPicUrl);
- 
+    
      try {
 
         {profPicUrl && profPicUrl.length > 0 && profPicUrl?.map((image) => {

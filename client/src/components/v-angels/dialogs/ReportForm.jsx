@@ -26,7 +26,7 @@ export default function ReportForm({ onClose }) {
         ),
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Dialog Closed...')
+          onClick: () => {}
         },
         variant: ''
       })
@@ -39,7 +39,7 @@ export default function ReportForm({ onClose }) {
         ),
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Dialog Closed...')
+          onClick: () => {}
         },
         variant: ''
       })
@@ -58,7 +58,7 @@ export default function ReportForm({ onClose }) {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => {}
             },
             variant: ''
           })
@@ -76,7 +76,7 @@ export default function ReportForm({ onClose }) {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => {}
             },
             variant: ''
           })

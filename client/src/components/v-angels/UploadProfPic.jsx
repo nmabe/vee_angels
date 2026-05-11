@@ -35,7 +35,7 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
           'You can drag and drop an image or select one from your device.',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })
@@ -69,25 +69,23 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
       if (res.data?.success) {
       
         dispatch(authCheck());  
-        console.log('New profile picture URL:', res.data); 
           toast.success('Profile picture updated successfully!', {
           description: 'Your new profile picture has been uploaded.',
           action: {
             label: 'OK',
             onClick: () => {
-              console.log('Closed')
+              {}
             }
           }
         });
       }
     } catch (error) {
 
-      console.log(error, 'Upload failed')
       toast.error('Upload failed', {
         description: error.response?.data?.message || 'Something went wrong',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })

@@ -117,7 +117,7 @@ export default function VAngelsAdminPage() {
         description: 'angel must be 18 years or older',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })
@@ -136,7 +136,7 @@ export default function VAngelsAdminPage() {
             ),
             action: {
               label: 'Proceed',
-              onClick: () => console.log('Success')
+              onClick: () => {}
             }
           })
         } else {
@@ -153,7 +153,7 @@ export default function VAngelsAdminPage() {
                     String(`${data.payload.message[key]}`).slice(1),
                   action: {
                     label: 'Dismiss',
-                    onClick: () => console.log('Close clicked')
+                    onClick: () => {}
                   }
                 }
               )
@@ -163,7 +163,7 @@ export default function VAngelsAdminPage() {
               description: data.payload.message || 'Something Went Wrong!!!',
               action: {
                 label: 'Dismiss',
-                onClick: () => console.log('Closed')
+                onClick: () => {}
               },
               variant: 'destructive'
             })

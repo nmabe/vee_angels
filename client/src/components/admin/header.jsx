@@ -13,9 +13,7 @@ export default function AdminHeader({setOpen}) {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(signOutUser()).then((data) => {
-      if (data?.payload?.success) {
-        console.log('Signed out successfully');
-      }else {
+      if (!data?.payload?.success) {
         toast.warning({
           title: 'There was a problem processing your request',
           description: 'Please try to signout again..',

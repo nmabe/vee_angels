@@ -49,7 +49,6 @@ export default function UsersAdminPage() {
     const { users } = useSelector((state) => state.users)
   const [search, setSearch] = useState('')
   const dispatch = useDispatch();
-  console.log(users);
   const handleStatusToggle = (id) => {
     setUsers((prev) =>
       prev.map((u) =>

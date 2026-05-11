@@ -55,13 +55,11 @@ export default function UploadImage({imageFiles, setImageFiles, UploadedImage, s
                 setImageLoadingState(false);
             }
         } catch (error) {
-            console.log(error.response?.data?.message || 'Upload failed');
             toast.warning('Upload failed', {
                 description: error.response?.data?.message,
                 action: {
                     label: 'Dismiss',
                     onClick: () => {
-                        console.log('Dismissing it....')
                 }}
             })
         }

@@ -54,7 +54,7 @@ export default function AngelApplications() {
         description: 'angel must be 18 years or older',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: {}
         },
         variant: 'destructive'
       })
@@ -77,7 +77,6 @@ export default function AngelApplications() {
               action: {
                 label: 'Proceed',
                 onClick: () => {
-                  console.log('Success')
                   navigate('/angels/home')
                 }
               }
@@ -99,7 +98,7 @@ export default function AngelApplications() {
                   action: {
                     label: 'Dismiss',
                     onClick: () => {
-                      console.log('Close clicked')
+                      
                     }
                   }
                 }
@@ -110,7 +109,7 @@ export default function AngelApplications() {
               description: data.payload?.message || 'Something Went Wrong!!!',
               action: {
                 label: 'Dismiss',
-                onClick: () => console.log('Closed')
+                onClick: () => {}
               },
               variant: 'destructive'
             })

@@ -14,7 +14,6 @@ const refreshCookie = ( res, user, msg =  'Cookie updated successfully.') => {
             process.env.JWT_USER_TOKEN,
             {expiresIn: '60m'}
         );
-        console.log('User after profile picture update:', user.profPic);
         
 
         res.cookie('token', token, {httpOnly: true, secure: false}).json({

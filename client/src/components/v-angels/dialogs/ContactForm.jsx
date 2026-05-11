@@ -23,7 +23,7 @@ export default function ContactForm({ onClose }) {
                 ),
                 action: {
                     label: 'Dismiss',
-                    onClick: () => console.log('Dialog Closed...')
+                    onClick: () => {}
                 },
                 variant: ''
             })
@@ -40,7 +40,7 @@ export default function ContactForm({ onClose }) {
                 ),
                 action: {
                     label: 'Dismiss',
-                    onClick: () => console.log('Dialog Closed...')
+                    onClick: () => {}
                 },
                 variant: ''
             })

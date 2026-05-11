@@ -21,7 +21,6 @@ export const changePassword = createAsyncThunk(
         }
       }
     )
-    console.log('chafPosi')
     return res?.data
   }
 )
@@ -45,7 +44,6 @@ export const editUsername = createAsyncThunk(
 export const changeProfilePic = createAsyncThunk(
   '/admin/angels/edit/',
   async ({ id, formData }) => {
-    console.log(formData)
     const res = await axios.put(
       `${API_URL}/api/admin/angels/edit/${id}`,
       formData,

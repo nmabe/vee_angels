@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LoadingSkeleton } from '../common/loading'
 import axios from 'axios'
 import { calculateAge } from '@/pages/admin/vAngelsAdmin'
+import { getAngels } from '@/store/admin/angel-slice'
 
 const getDeviceId = () => {
   let deviceId = localStorage.getItem('deviceId')
@@ -38,7 +39,6 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const [controlsOpacityClass, setControlsOpacityClass] = React.useState('')
 
   const dispatch = useDispatch()
-  //console.log('Is Liked: ', isLiked);
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Fade()])
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi)
@@ -56,7 +56,6 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
 
   const toggleDetails = () => {
     setHideDetails(!hideDetails)
-    console.log(hideDetails);
     setControlsOpacityClass('opacity-100')
     setTimeout(() => {
       setControlsOpacityClass('')
@@ -75,8 +74,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
       )
       // Optionally handle success, e.g., show a notification
       if (res.data?.success) {
-        console.log('View count updated successfully for angel:', username);
-        // View count updated successfully
+        getAngels() // Refresh angels to get updated view count
       }
     } catch (error) {
       // Optionally handle error, e.g., show an error notification
@@ -88,7 +86,6 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     const device_Id = getDeviceId()
     const viewedKey = `AngelViewed_${angelId}__${device_Id}`
     const angelsViewed = localStorage.getItem(viewedKey);
-    console.log('Checking view for:', angelsViewed, 'Angel views:', viewedKey)
     if (!angelsViewed) {
       localStorage.setItem(viewedKey, 'true');
       updateViewCount(angelId, device_Id)

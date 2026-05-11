@@ -61,7 +61,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
         ),
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Dialog Closed...')
+          onClick: () => {}
         },
         variant: ''
       })
@@ -72,7 +72,6 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
         (word) => word.angelId == _id && word.userId === userId
       )
 
-      console.log(result)
       dispatch(unlikeAngel(angel._id)).then((data) => {
         if (data?.payload) {
           toast.info(`You don't like ${angel.username} anymore`, {
@@ -84,7 +83,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => sed...'
             }
           })
         } else {
@@ -92,7 +91,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             description: data.payload.message,
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => {}          
             },
             variant: 'destructive'
           })
@@ -110,7 +109,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => {}
             }
           })
         } else {
@@ -118,7 +117,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             description: data.payload.message,
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Dialog Closed...')
+              onClick: () => {}
             },
             variant: 'destructive'
           })
@@ -222,7 +221,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
                   <Caravan className="inline w-[15px] h-[15px] mr-1" />
                   Visit:{' '}
                 </span>
-                {travel}  
+                {travel}
               </li>
               <li>
                 <span className="font-bold">

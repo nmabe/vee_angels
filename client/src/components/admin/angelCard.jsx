@@ -44,7 +44,6 @@ export default function AngelCard({ angel }) {
           action: {
             label: 'Dismiss',
             onClick: () => {
-              console.log('Success')
             }
           }
         })
@@ -53,7 +52,7 @@ export default function AngelCard({ angel }) {
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {}
           },
           variant: 'destructive'
         })

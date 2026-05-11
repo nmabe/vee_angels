@@ -78,7 +78,6 @@ const likeAngel = async (req, res) => {
         });
 
         await newLike.save().then(() => {
-            console.log('Angel liked successfully');
             res.status(200).json({ 
                 success: true,
                 message: 'Angel liked successfully', angel });
@@ -128,7 +127,6 @@ const unlikeAngel = async (req, res) => {
 const fetchFilteredAngels = async (req, res) => {
     const {province = [], rating = [], sort = 'newest'} = req.query;
 
-    console.log('Sorting ----> :', req.query);
     const filter = {'status': {$ne: 'Deactive' }};
 
     if (province.length > 0) {
@@ -172,8 +170,6 @@ const fetchFilteredAngels = async (req, res) => {
             sortBy = { createdAt: -1 }
     }
 
-    console.log('Filter:', filter);
-    console.log('Sort:', sortBy);
     try {
         await Angel.find(filter).sort(sortBy).then((angels) => {
             res.status(200).json({
@@ -230,7 +226,6 @@ const addComment = async (req, res) => {
         });
 
         await newComment.save().then(() => {
-            console.log('Comment added successfully');
             res.status(200).json({ 
                 success: true,
                 message: 'Comment added successfully', angel });
@@ -246,7 +241,6 @@ const setView = async (req, res) => {
     const angelId = req.params.id;
     const deviceId = req.body.deviceId;
 
-    console.log(`Setting view for angel ${angelId} from device ${deviceId}`);
     try {
         const angel = await Angel.findById(angelId);
 

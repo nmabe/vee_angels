@@ -164,8 +164,7 @@ const editAngel = async (req, res) => {
     delete newAngelUpdate.createdAt;
     newAngelUpdate.updatedAt = new Date().toLocaleString(); 
     
-    console.log(newAngelUpdate);
-
+    
     const { id } = req.params;
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({
@@ -192,8 +191,7 @@ const editAngel = async (req, res) => {
 
 const deleteAngelImage = async (req, res) => {
     const { angelData, image } = req.body;
-    console.log('IMAGE_URL', image);
-
+   
     try {
             imageDeleteUtil(image, res);
             try {

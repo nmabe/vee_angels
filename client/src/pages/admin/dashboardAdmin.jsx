@@ -49,7 +49,6 @@ export default function DashboardAdminPage() {
 
     const dispatch = useDispatch();
 
-    console.log('Reports:', reports);
 
   // Mock data for demonstration
   const stats = [
@@ -160,7 +159,7 @@ export default function DashboardAdminPage() {
           description: 'The action you selected is not recognized.',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {}
           },
           variant: 'destructive'
         });

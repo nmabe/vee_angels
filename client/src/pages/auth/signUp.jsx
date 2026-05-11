@@ -25,17 +25,16 @@ const AuthSignUp = () => {
           description: `welcome to vee's angels`,
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Dialog closed')
+            onClick: () => {}
           }
         })
         navigate('/auth/signIn')
       } else {
-        console.log(data)
         toast.warning('There was a problem with your request.', {
           description: data.payload.message,
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Dialog closed...')
+            onClick: () => {}
           },
           variant: 'destructive'
         })

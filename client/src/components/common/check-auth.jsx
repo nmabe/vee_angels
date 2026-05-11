@@ -15,7 +15,6 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
     !location.pathname.includes('/signUp') &&
     !location.pathname.includes('/age-verification')
   ) {
-    console.log('Redirecting to age verification page')
     return (
       <Navigate to="/age-verification" state={{ from: location }} replace />
     )
@@ -40,7 +39,6 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
       location.pathname.includes('/unauth-page')
     )
   ) {
-    console.log('User not authenticated, redirecting to sign-in page')
     return <Navigate to="/auth/signIn" state={{ from: location }} replace />
   }
 
@@ -54,7 +52,6 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
         <Navigate to="/admin/dashboard" state={{ from: location }} replace />
       )
     } else {
-      console.log(location.pathname)
       return <Navigate to="/angels/home" state={{ from: location }} replace />
     }
   }

@@ -70,10 +70,8 @@ const messages = useSelector((state) => state.contact.messages);
     dispatch(getMessages());  
   }, [dispatch])
 
-  console.log('messages :', messages );
   
   const handleApprove = (id) => {
-    console.log('Approving application with id:', id);
     dispatch(approveApplication(id)).then((data) => {
       if (data?.payload?.success) {
         dispatch(getApplications());
@@ -82,7 +80,6 @@ const messages = useSelector((state) => state.contact.messages);
           action: {
             label: 'Dismiss',
             onClick: () => {
-              console.log('Success')
             }
           }
         })
@@ -91,7 +88,7 @@ const messages = useSelector((state) => state.contact.messages);
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () =>{}
           },
           variant: 'destructive'
         })
@@ -100,7 +97,6 @@ const messages = useSelector((state) => state.contact.messages);
   }
 
   const handleReject = (id, profPicUrl = []) => {
-    console.log('Approving application with id:', id);
     dispatch(rejectApplication({id, profPicUrl})).then((data) => {
       if (data?.payload?.success) {
         toast.success(`Angel registration rejected`, {
@@ -108,7 +104,7 @@ const messages = useSelector((state) => state.contact.messages);
           action: {
             label: 'Dismiss',
             onClick: () => {
-              console.log('Success')
+              {}
             }
           }
         })
@@ -118,7 +114,7 @@ const messages = useSelector((state) => state.contact.messages);
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {}
           },
           variant: 'destructive'
         })
@@ -151,16 +147,15 @@ const messages = useSelector((state) => state.contact.messages);
             description: 'All angel view counts have been reset.',
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             }
           })
         } else {
-          console.error('Failed to reset view counts:', res);
           toast.warning('Failed to reset view counts.', {
             description: 'Something went wrong while resetting views.',
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             },
             variant: 'destructive'
           })
@@ -171,7 +166,7 @@ const messages = useSelector((state) => state.contact.messages);
           description: 'Unable to reset view counts.',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed error', error)
+            onClick: () => {}
           },
           variant: 'destructive'
         })

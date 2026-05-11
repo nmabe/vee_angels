@@ -8,8 +8,6 @@ const changePassword = async (req, res) => {
   const { password } = req.body
   const userId = req.params.id
 
-  console.log('req.body')
-
   if (!userId || !password) {
     return res.status(400).json({
       success: false,
@@ -102,7 +100,6 @@ const changeProfilePic = async (req, res, next) => {
         }
       }
     } else {
-      console.log('Eish Goa Nyiwa!!!!');
       res.status(500).json({
         success: false,
         message: 'File Upload Error, Try with different pictures.'

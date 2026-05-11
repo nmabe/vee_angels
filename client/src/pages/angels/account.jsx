@@ -46,7 +46,7 @@ export default function AngelsAccountPage() {
         description: 'Please make sure both passwords are the same.',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })
@@ -60,7 +60,7 @@ export default function AngelsAccountPage() {
             description: 'Something Went Wrong!!!',
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             },
             variant: 'destructive'
           })
@@ -69,7 +69,7 @@ export default function AngelsAccountPage() {
             description: 'Your password has been successfully updated.',
             action: {
               label: 'OK',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             }
           })
           setEditing(false)

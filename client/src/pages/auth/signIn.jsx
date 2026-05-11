@@ -22,7 +22,7 @@ const AuthSignIn = () => {
           description: data.payload.message,
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Dialog Closed...')
+            onClick: () => {}
           }
         })
         if (data.payload.user.role === 'admin') {
@@ -35,7 +35,7 @@ const AuthSignIn = () => {
           description: data.payload?.message,
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Dialog Closed...')
+            onClick: () => {}
           },
           variant: 'destructive'
         })

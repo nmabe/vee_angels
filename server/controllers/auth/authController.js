@@ -101,7 +101,6 @@ const signUpUser = async (req, res) => {
 
             newUser.save().then(user => {
 
-                console.log("\x1b[43mOh my heavens! Shit went exceptional");
                 res.status(200).json({
                     success: true,
                     message: 'signing up your account was successful'
@@ -123,8 +122,7 @@ const signOutUser = (req, res) => {
 
 const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
-    console.log('Auth Middleware used', req.user);
-
+    
     if (!token) {
         return res.status(401).json({
             success: false,

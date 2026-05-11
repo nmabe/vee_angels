@@ -41,16 +41,14 @@ const angelsFilterSlice = createSlice({
 export const likeAngel = createAsyncThunk('angels/angels/like', 
     async (id) => {
     const {angelId } = id;
-    console.log(angelId);
     
     const res = await axios.post(`${API_URL}/api/angels/angels/like/${angelId}`, id, {
         withCredentials: true
-     });
+    });
     return res?.data;
 }
 );
 export const unlikeAngel = createAsyncThunk('angels/angels/unlike', async (id) => {
-    console.log(id);
     const res = await axios.post(`${API_URL}/api/angels/angels/unlike/${id}`);
     return res?.data;
 }
@@ -108,8 +106,6 @@ const angelLikesSlice = createSlice({
 export const addComment = createAsyncThunk('angels/angels/comments/',
     async (id) => {
         const { angelId, userId, commentText } = id;
-        console.log(angelId, userId, commentText);
-
         const res = await axios.post(`${API_URL}/api/angels/angels/comments/${angelId}`, id,);
         return res?.data;
     }

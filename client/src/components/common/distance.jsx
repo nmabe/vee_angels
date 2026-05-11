@@ -59,8 +59,7 @@ export default function Distance({ address }) {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      alert(error.message)
-      console.log(false);
+      alert(error.message);
     }
   }
 

@@ -60,7 +60,6 @@ const authSlice = createSlice({
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(state)
         state.user = state.user ? state.user : {}
         state.isAuthenticated = false
       })

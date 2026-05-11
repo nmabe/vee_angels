@@ -16,7 +16,6 @@ export const addAngel = createAsyncThunk('/angels/add',
 
 export const editAngel = createAsyncThunk('/admin/angels/edit/',
     async ({id, angelData}) => {
-        console.log('This Data Never Changes', angelData);
         const res = await axios.put(`${API_URL}/api/admin/angels/edit/${id}`, angelData,
             {
                 headers: {
@@ -37,7 +36,6 @@ export const getAngels = createAsyncThunk('/admin/angels/get/',
 
 export const removeAngel = createAsyncThunk('/admin/angels/remove/', 
     async ({id, profPicUrl}) => {
-        console.log('deleting user', id);
         const res = await axios.delete(`${API_URL}/api/admin/angels/remove/${id}`, profPicUrl);
         return res?.data;
     }
@@ -45,7 +43,6 @@ export const removeAngel = createAsyncThunk('/admin/angels/remove/',
 
 export const deleteAngelImage = createAsyncThunk('/admin/angels/deleteImage/',
     async ({angelData, image}) => {
-       // console.log('Deleting Image', angelData, image);
         const res = await axios.put(`${API_URL}/api/admin/angels/deleteImage/${angelData._id}`, {angelData, image},
             {
                 header: {

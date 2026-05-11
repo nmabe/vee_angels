@@ -22,7 +22,6 @@ const imageUploadUtil = async (file)  => {
 const imageDeleteUtil = async (image) => {
 
     const public_id = image.split('/').pop().split('.')[0];
-    console.log('PUBLIC_id', public_id);
     // Validate public_id: must be a non-empty string and only contain allowed characters
     const isValidPublicId =
         typeof public_id === 'string' &&

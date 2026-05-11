@@ -3,7 +3,6 @@ const Reports = require('../../models/Reports');
 exports.addReport = async (req, res) => {
     try {
         const { targetId, title, details } = req.body;
-        console.log('Received report data:', { targetId, title, details });
         const newReport = new Reports({ targetId, title, details });
         await newReport.save();
         res.status(200).json({ 

@@ -58,7 +58,7 @@ const AngelModal = ({ angel }) => {
           action: {
             label: 'Dismiss',
             onClick: () => {
-              console.log('Success')
+              
             }
           }
         })
@@ -67,7 +67,7 @@ const AngelModal = ({ angel }) => {
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {}
           },
           variant: 'destructive'
         })
@@ -91,7 +91,7 @@ const AngelModal = ({ angel }) => {
             action: {
               label: 'Dismiss',
               onClick: () => {
-                console.log('Success')
+                
               }
             }
           })
@@ -100,7 +100,7 @@ const AngelModal = ({ angel }) => {
             description: 'Something Went Wrong!!!',
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             },
             variant: 'destructive'
       });
@@ -112,7 +112,7 @@ const AngelModal = ({ angel }) => {
         description: 'Something Went Wrong!!!',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })
@@ -140,7 +140,7 @@ const AngelModal = ({ angel }) => {
           action: {
             label: 'Dismiss',
             onClick: () => {
-              console.log('Success')
+              {}
             }
           }
         })
@@ -149,7 +149,7 @@ const AngelModal = ({ angel }) => {
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {  }
           },
           variant: 'destructive'
         })
@@ -165,13 +165,12 @@ const AngelModal = ({ angel }) => {
           description: 'No profile images found for this angel.',
           action: {
             label: 'Dismiss',
-            onClick: () => console.log('Closed')
+            onClick: () => {}
           },
           variant: 'destructive'
         })
         return
       }
-      console.log(userFormData.profPicUrl[index]) ;
       const deletedImage = userFormData.profPicUrl[index]
       const updatedImages = userFormData.profPicUrl.filter((_, i) => i !== index)
       setUserFormData({
@@ -192,7 +191,6 @@ const AngelModal = ({ angel }) => {
             action: {
               label: 'Dismiss',
               onClick: () => {
-                console.log('Success')
               }
             },
             variant: 'success'
@@ -202,7 +200,7 @@ const AngelModal = ({ angel }) => {
             description: <h2>{`Something went wrong!!!!`}</h2>,
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             },
             variant: 'destructive'
           })
@@ -225,13 +223,12 @@ const AngelModal = ({ angel }) => {
         description: 'angel must be 18 years or older',
         action: {
           label: 'Dismiss',
-          onClick: () => console.log('Closed')
+          onClick: () => {}
         },
         variant: 'destructive'
       })
     } else {
       const id = userFormData._id
-      console.log(userFormData)
 
       dispatch(editAngel({ id, angelData: userFormData })).then((data) => {
         if (data?.payload?.success) {
@@ -245,7 +242,7 @@ const AngelModal = ({ angel }) => {
             action: {
               label: 'Dismiss',
               onClick: () => {
-                console.log('Success')
+                
               }
             }
           })
@@ -254,7 +251,7 @@ const AngelModal = ({ angel }) => {
             description: 'Something Went Wrong!!!',
             action: {
               label: 'Dismiss',
-              onClick: () => console.log('Closed')
+              onClick: () => {}
             },
             variant: 'destructive'
           })

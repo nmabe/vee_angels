@@ -161,7 +161,7 @@ const messages = useSelector((state) => state.contact.messages);
           })
         }
     }
-       catch(error) {
+      catch(error) {
         toast.error('An error occurred.', {
           description: 'Unable to reset view counts.',
           action: {

@@ -9,14 +9,14 @@ const AngelsFilter = ({filter, handleFilter}) =>  {
   return (
     <div className='bg-background shadowm-sm rounded-lg'>
       <div className="p-e border-b ">
-        <h4 className="text-xl font-extrabold">Filter results</h4>
+        <h4 className="text-xl font-extrabold hidden">Filter results</h4>
       </div>
-      <div className="p-4 overflow-auto ">
+      <div className="p-4 overflow-auto hidden">
         
       {
         Object.keys(angelFilterOptions).map(item => (
             <Fragment>
-                <div className='mb-6'>
+                <div className='mb-6' >
                     <h4 className="text-base font-bold mt-2">{item}</h4>
                     <div className="grid gap-2 mt-2">
                         {

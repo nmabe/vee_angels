@@ -69,7 +69,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     formData.append('deviceId', deviceId)
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/angels/angels/setView/${angelId}/`,
+        `${import.meta.env.REACT_APP_API_URL}/api/angels/angels/setView/${angelId}/`,
         formData
       )
       // Optionally handle success, e.g., show a notification
@@ -85,9 +85,9 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const handleAngelView = (angelId) => {
     const device_Id = getDeviceId()
     const viewedKey = `AngelViewed_${angelId}__${device_Id}`
-    const angelsViewed = localStorage.getItem(viewedKey);
+    const angelsViewed = localStorage.getItem(viewedKey)
     if (!angelsViewed) {
-      localStorage.setItem(viewedKey, 'true');
+      localStorage.setItem(viewedKey, 'true')
       updateViewCount(angelId, device_Id)
     }
   }

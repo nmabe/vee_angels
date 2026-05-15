@@ -405,7 +405,7 @@ export default function AngelsHomePage() {
               className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed"
             >
               Join our community of trusted professionals and make a meaningful
-              impact. Connect with families who need your care and support.
+              impact. Connect with clients who need your care and support.
             </motion.p>
 
             <motion.div
@@ -450,7 +450,7 @@ export default function AngelsHomePage() {
               </h2>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
                 At Vee Angels, our mission is to connect caring, trustworthy
-                individuals with families and people in need of support.
+                individuals with clients and people in need of support.
               </p>
               <p className="text-lg text-gray-700 mb-8 leading-relaxed">
                 We believe everyone deserves a helping hand and a compassionate

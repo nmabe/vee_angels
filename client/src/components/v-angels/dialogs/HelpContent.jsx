@@ -33,7 +33,7 @@ export default function HelpContent() {
 
       <h3 className='text-lg font-semibold text-slate-800 dark:text-slate-100'>How does safety work?</h3>
       <p className='text-base mb-4'>
-        We verify Angels during onboarding and encourage families to read
+        We verify Angels during onboarding and encourage clients to read
         reviews and profile details. If you notice any suspicious behavior,
         report it immediately using the <strong>Report</strong> dialog.
       </p>

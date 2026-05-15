@@ -182,7 +182,7 @@ export default function AngelApplications() {
               </div>
               <h3 className="font-bold">Meaningful Work</h3>
               <p className="text-sm text-gray-600 mt-1">
-                Connect with families who value compassion and reliability.
+                Connect with clients who value compassion and reliability.
               </p>
             </div>
 

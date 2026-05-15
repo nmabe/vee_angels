@@ -59,7 +59,7 @@ export default function AngelsFooter() {
           <motion.div variants={fadeIn}>
             <h3 className="text-2xl font-black mb-4">Vee Angels</h3>
             <p className="text-white/80 leading-relaxed">
-              Connecting caring professionals with families in need of trusted
+              Connecting caring professionals with clients in need of trusted
               support.
             </p>
           </motion.div>

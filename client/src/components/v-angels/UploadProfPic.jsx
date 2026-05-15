@@ -10,16 +10,22 @@ import { set } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import { authCheck } from '@/store/auth-slice'
 
-export default function UploadProfPic({ user, loadingState, setLoadingState, uploadedImage, setUploadedImage }) {
-  const inputRef = useRef(null);
-  const [fileUrl, setFileUrl ] = useState('');
-  const dispatch = useDispatch();
+export default function UploadProfPic({
+  user,
+  loadingState,
+  setLoadingState,
+  uploadedImage,
+  setUploadedImage
+}) {
+  const inputRef = useRef(null)
+  const [fileUrl, setFileUrl] = useState('')
+  const dispatch = useDispatch()
   const handleUploadImageChange = (e) => {
     e.preventDefault()
     const file = e.target?.files[0]
     if (file) {
       setUploadedImage(file)
-      setFileUrl(URL.createObjectURL(file));
+      setFileUrl(URL.createObjectURL(file))
     }
   }
 
@@ -53,34 +59,33 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
   const uploadToClodinary = async () => {
     setLoadingState(true)
     const formData = new FormData()
-    
+
     try {
-      formData.append('user_avatar', uploadedImage); // Append files under 'images' key
-      
+      formData.append('user_avatar', uploadedImage) // Append files under 'images' key
+
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/user/uploadProfilePic/${user.id}/`,
+        `${import.meta.env.REACT_APP_API_URL}/api/user/uploadProfilePic/${user.id}/`,
         formData,
         {
           withCredentials: true,
           headers: { 'Content-Type': 'multipart/form-data' }
         }
-      );
+      )
       // server may return res.data.user.profPic
       if (res.data?.success) {
-      
-        dispatch(authCheck());  
-          toast.success('Profile picture updated successfully!', {
+        dispatch(authCheck())
+        toast.success('Profile picture updated successfully!', {
           description: 'Your new profile picture has been uploaded.',
           action: {
             label: 'OK',
             onClick: () => {
-              {}
+              {
+              }
             }
           }
-        });
+        })
       }
     } catch (error) {
-
       toast.error('Upload failed', {
         description: error.response?.data?.message || 'Something went wrong',
         action: {
@@ -93,20 +98,19 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
       setLoadingState(false)
     }
   }
-  
+
   useEffect(() => {
     return () => {
       if (fileUrl) {
-        URL.revokeObjectURL(fileUrl);
+        URL.revokeObjectURL(fileUrl)
       }
     }
   }, [fileUrl])
 
-
   return (
     <div className="mb-8 flex flex-col items-center">
       <div className="relative w-36 h-36 rounded-full bg-gradient-to-br from-[#892f82]/20 to-[#f9f6fb] shadow-inner border-4 border-[#f9f6fb] overflow-hidden mb-3 flex items-center justify-center">
-        {(user.profPic || uploadedImage) ? (
+        {user.profPic || uploadedImage ? (
           <img
             src={uploadedImage ? fileUrl : user.profPic}
             alt="Profile"
@@ -125,7 +129,7 @@ export default function UploadProfPic({ user, loadingState, setLoadingState, upl
             onDrop={handleDrop}
             className="hidden"
           />
-          < UploadCloudIcon />
+          <UploadCloudIcon />
         </label>
       </div>
 

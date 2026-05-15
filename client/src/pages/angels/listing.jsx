@@ -198,9 +198,9 @@ const AngelsListingPage = () => {
                 data={angels}
                 onSearchTextChange={setSearchTerm}
               />
-              <span className="text-gray-600 font-semibold bg-purple-100 px-4 py-2 rounded-full text-xs flex justify-center w-max">
+{/*              <span className="text-gray-600 font-semibold bg-purple-100 px-4 py-2 rounded-full text-xs flex justify-center w-max">
                 {(angels && angels.length) ? angels.length : 0} Angels
-              </span>
+              </span>*/}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 p-3">
               {currentItems && currentItems.length > 0 ? (

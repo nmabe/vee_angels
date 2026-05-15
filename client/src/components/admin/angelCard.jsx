@@ -1,13 +1,8 @@
-import { Card, CardContent } from '../ui/card'
-import { Button } from '../ui/Button'
 import { User, Check, Heart, Pen } from 'lucide-react'
-import { calculateAge } from '@/pages/admin/vAngelsAdmin'
 import AngelModal from './angelModal'
 import { useDispatch } from 'react-redux'
 import { getAngels, removeAngel } from '@/store/admin/angel-slice'
 import { toast } from 'sonner'
-import { useEffect } from 'react'
-import { Badge } from '../ui/badge'
 
 export default function AngelCard({ angel }) {
   const {

@@ -14,14 +14,17 @@ import {
   EyeOff
 } from 'lucide-react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getApplications, rejectApplication, approveApplication } from '@/store/applications/applications-slice'
-import { toast } from 'sonner';
+import {
+  getApplications,
+  rejectApplication,
+  approveApplication
+} from '@/store/applications/applications-slice'
+import { toast } from 'sonner'
 import AngelPopUpCard from '@/components/v-angels/angelPopUpCard'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { getReports, deleteReport } from '@/store/contact/contact-reports-slice';
-import { getMessages, deleteMessage } from '@/store/contact/contact-slice';
+import { getReports, deleteReport } from '@/store/contact/contact-reports-slice'
+import { getMessages, deleteMessage } from '@/store/contact/contact-slice'
 import axios from 'axios'
-
 
 //TimeAgo.addDefaultLocale(en)
 
@@ -51,64 +54,33 @@ const activities = [
   }
 ]
 
-
-
 export default function FeaturesAdminPage() {
   const newAngels = useSelector((state) => state.applications.applications)
   const dispatch = useDispatch()
-  const [reportList, setReportList] = useState([]); 
-const messages = useSelector((state) => state.contact.messages);
-
+  const [reportList, setReportList] = useState([])
+  const messages = useSelector((state) => state.contact.messages)
 
   useEffect(() => {
     dispatch(getApplications())
     dispatch(getReports()).then((data) => {
       if (data?.payload?.reports) {
-        setReportList(data.payload.reports);
+        setReportList(data.payload.reports)
       }
-    });
-    dispatch(getMessages());  
+    })
+    dispatch(getMessages())
   }, [dispatch])
 
-  
   const handleApprove = (id) => {
     dispatch(approveApplication(id)).then((data) => {
       if (data?.payload?.success) {
-        dispatch(getApplications());
+        dispatch(getApplications())
         toast.success(`Angel registration approved`, {
           description: <h2>New Angel has been added</h2>,
           action: {
             label: 'Dismiss',
-            onClick: () => {
-            }
+            onClick: () => {}
           }
         })
-      }else {
-        toast.warning('There was a problem with your request.', {
-          description: 'Something Went Wrong!!!',
-          action: {
-            label: 'Dismiss',
-            onClick: () =>{}
-          },
-          variant: 'destructive'
-        })
-      }
-    });
-  }
-
-  const handleReject = (id, profPicUrl = []) => {
-    dispatch(rejectApplication({id, profPicUrl})).then((data) => {
-      if (data?.payload?.success) {
-        toast.success(`Angel registration rejected`, {
-          description: <h2>Angel Application has been Rejected</h2>,
-          action: {
-            label: 'Dismiss',
-            onClick: () => {
-              {}
-            }
-          }
-        })
-        dispatch(getApplications());
       } else {
         toast.warning('There was a problem with your request.', {
           description: 'Something Went Wrong!!!',
@@ -119,8 +91,35 @@ const messages = useSelector((state) => state.contact.messages);
           variant: 'destructive'
         })
       }
-    });
-    
+    })
+  }
+
+  const handleReject = (id, profPicUrl = []) => {
+    dispatch(rejectApplication({ id, profPicUrl })).then((data) => {
+      if (data?.payload?.success) {
+        toast.success(`Angel registration rejected`, {
+          description: <h2>Angel Application has been Rejected</h2>,
+          action: {
+            label: 'Dismiss',
+            onClick: () => {
+              {
+              }
+            }
+          }
+        })
+        dispatch(getApplications())
+      } else {
+        toast.warning('There was a problem with your request.', {
+          description: 'Something Went Wrong!!!',
+          action: {
+            label: 'Dismiss',
+            onClick: () => {}
+          },
+          variant: 'destructive'
+        })
+      }
+    })
+
     // Add backend call here
   }
 
@@ -134,36 +133,27 @@ const messages = useSelector((state) => state.contact.messages);
   const resetViews = async () => {
     // Add backend call here to reset views
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/angels/angels/resetView/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-        if (res.data?.success) {
-          
-          toast.success('View counts reset successfully', {
-            description: 'All angel view counts have been reset.',
-            action: {
-              label: 'Dismiss',
-              onClick: () => {}
-            }
-          })
-        } else {
-          toast.warning('Failed to reset view counts.', {
-            description: 'Something went wrong while resetting views.',
-            action: {
-              label: 'Dismiss',
-              onClick: () => {}
-            },
-            variant: 'destructive'
-          })
+      const res = await axios.post(
+        `${import.meta.env.REACT_APP_API_URL}/api/angels/angels/resetView/`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-    }
-      catch(error) {
-        toast.error('An error occurred.', {
-          description: 'Unable to reset view counts.',
+      )
+
+      if (res.data?.success) {
+        toast.success('View counts reset successfully', {
+          description: 'All angel view counts have been reset.',
+          action: {
+            label: 'Dismiss',
+            onClick: () => {}
+          }
+        })
+      } else {
+        toast.warning('Failed to reset view counts.', {
+          description: 'Something went wrong while resetting views.',
           action: {
             label: 'Dismiss',
             onClick: () => {}
@@ -171,9 +161,18 @@ const messages = useSelector((state) => state.contact.messages);
           variant: 'destructive'
         })
       }
+    } catch (error) {
+      toast.error('An error occurred.', {
+        description: 'Unable to reset view counts.',
+        action: {
+          label: 'Dismiss',
+          onClick: () => {}
+        },
+        variant: 'destructive'
+      })
+    }
   }
 
-  
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#0f1021] via-[#23243a] to-[#1a1b2f] relative overflow-hidden flex flex-col">
       {/* Futuristic glowing grid background */}
@@ -239,7 +238,7 @@ const messages = useSelector((state) => state.contact.messages);
                             <span className="font-bold text-cyan-100 truncate">
                               {angel.username}
                             </span>
-                            </div>
+                          </div>
                         </DialogTrigger>
                         <AngelPopUpCard angel={angel} />
                       </Dialog>
@@ -254,7 +253,9 @@ const messages = useSelector((state) => state.contact.messages);
                         <Button
                           size="sm"
                           className="bg-red-400 text-[#23243a] hover:bg-red-300 rounded-lx px-3 py-1 font-bold"
-                          onClick={() => handleReject(angel._id, angel.profPicUrl)}
+                          onClick={() =>
+                            handleReject(angel._id, angel.profPicUrl)
+                          }
                         >
                           <XCircle className="w-4 h-4 mr-1" />
                         </Button>

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Navigate, useLocation } from 'react-router-dom'
 
 function CheckAuthentication({ isAuthenticated, user, children }) {
@@ -70,7 +69,7 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
   ) {
     return <Navigate to="/admin/dashboard" state={{ from: location }} replace />
   }
-
+  console.log('Authentication check passed for:', location.pathname);
   return <>{children}</>
 }
 

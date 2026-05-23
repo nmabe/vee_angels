@@ -25,6 +25,9 @@ import CookiesPage from './pages/cookies'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { authCheck } from './store/auth-slice'
+import '@fontsource/gugi';
+import '@fontsource-variable/comfortaa/wght.css';
+import '@fontsource/nosifer';
 
 function App() {
   const dispatch = useDispatch()

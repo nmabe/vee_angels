@@ -26,7 +26,12 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
       location.pathname.includes('/angels/home') ||
       location.pathname.includes('/angels/angels'))
   ) {
-    return <>{children}</>
+    if (location.pathname === '/'){
+      return <Navigate to="/angels/home" state={{ from: location }} replace />;
+    } 
+      else {
+      return <>{children}</>
+    }
   }
 
   if (
@@ -69,7 +74,6 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
   ) {
     return <Navigate to="/admin/dashboard" state={{ from: location }} replace />
   }
-  console.log('Authentication check passed for:', location.pathname);
   return <>{children}</>
 }
 

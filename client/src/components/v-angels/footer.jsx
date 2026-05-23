@@ -57,7 +57,9 @@ export default function AngelsFooter() {
         >
           {/* Brand */}
           <motion.div variants={fadeIn}>
-            <h3 className="text-2xl font-black mb-4">Vee Angels</h3>
+            <h3 className="text-2xl  mb-4">  <span style={{fontFamily: '"Comfortaa Variable", system-ui'}} className="first-letter:text-black first-letter:bg-white first-letter:text-4xl first-letter:font-bold relative left-[-15px] text-[28px] font-extrabold font-sans font-stretch-expanded tracking-tighter capitalize">
+            Vee Angels
+          </span></h3>
             <p className="text-white/80 leading-relaxed">
               Connecting caring professionals with clients in need of trusted
               support.

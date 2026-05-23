@@ -30,7 +30,7 @@ function VAngelsLayout() {
     <div className="flex flex-col overflow-hidden">
       {/* Header with fade effect */}
       <div
-        className={`transition-opacity duration-500 ${
+        className={`transition-opacity duration-[1s,15s] ${
           showHeader ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >

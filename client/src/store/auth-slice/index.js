@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const API_URL =
-  import.meta.env.REACT_APP_API_URL || 'http://https://vee-angels.onrender.com'
+  import.meta.env.REACT_APP_API_URL || 'https://vee-angels.onrender.com'
 
 const initialState = {
   isAuthenticated: false,
@@ -37,7 +37,7 @@ export const signOutUser = createAsyncThunk('/auth/signOut', async () => {
 })
 
 export const authCheck = createAsyncThunk('/auth/auth-check/', async () => {
-  const res = await axios.get(`http://localhost:5000/api/auth/auth-check/`, {
+  const res = await axios.get(`${API_URL}/api/auth/auth-check/`, {
     withCredentials: true,
     headers: {
       'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',

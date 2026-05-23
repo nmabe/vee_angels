@@ -31,7 +31,7 @@ const MenuNavSections = () => {
 
 const RightMenuNavSection = () => {
   return (
-    <div className="flex h-16 items-center justify-between px-4      md:px-6">
+    <div className="flex h-16 items-center justify-between px-4 md:px-6">
       <Link
         className="flex items-center gap-1 hover:text-[#892f82] block bg-[#892f82] px-4 py-2 rounded-[30px]"
         to="/auth/signIn"
@@ -125,7 +125,7 @@ export default function AngelHeader() {
             <AvatarImage src="https://res.cloudinary.com/dddjh584x/image/upload/v1778347938/veeAngelsLogo-bg_su3osc.png" />
             <AvatarFallback>V-A</AvatarFallback>
           </Avatar>
-          <span className="text-[28px] font-extrabold ml-1 font-sans italic font-stretch-expanded tracking-tighter capitalize">
+          <span style={{fontFamily: '"gugi", system-ui'}} className="first-letter:text-[#892f82] first-letter:bg-white first-letter:text-4xl first-letter:font-bold relative left-[-10px] text-[28px] font-extrabold font-sans font-stretch-expanded tracking-tighter capitalize">
             Vee Angels
           </span>
         </Link>

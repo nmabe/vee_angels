@@ -47,9 +47,10 @@ const signInUser = async (req, res) => {
             console.log('Nou Ziya Khala: ', user);
 
         res.cookie("token", token, {
-                    httpOnly: true, 
+                    httpOnly: true,
                     secure: true,
-                    sameSite: isProduction ? 'Strict' : 'None',
+                    sameSite: 'none',
+                    maxAge: 3600000 
                 }).json({
                 success: true,
                 message: `Welcome back ${user.username}`,

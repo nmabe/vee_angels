@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 require('dotenv').config();
 
-const signInUser = async (req, res) => {
+const signInUser = async (req, res) => {    
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const {username, password } = req.body;
 
     if (!username || !password) {
@@ -16,6 +18,7 @@ const signInUser = async (req, res) => {
     let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     User.findOne(regex.test(username) ? {email: username} : {username}).then((user) => {
         if (!user) {
+            console.log('User Not found: ', user);
             return res.json({
                 success: false,
                 message: "User doesn't exist."
@@ -41,8 +44,13 @@ const signInUser = async (req, res) => {
             process.env.JWT_USER_TOKEN,
             {expiresIn: '60m'}
         );
+            console.log('Nou Ziya Khala: ', user);
 
-        res.cookie("token", token, {httpOnly: true, secure: false}).json({
+        res.cookie("token", token, {
+                    httpOnly: true, 
+                    secure: true,
+                    sameSite: isProduction ? 'Strict' : 'None',
+                }).json({
                 success: true,
                 message: `Welcome back ${user.username}`,
                 user: {

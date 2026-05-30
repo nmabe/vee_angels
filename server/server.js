@@ -18,12 +18,6 @@ const allowedOrigin = [
     ];
 
 app.use(cors({
-<<<<<<< HEAD
-    origin: [
-        'http://localhost:5173/',
-        'https://vee-angels.vercel.app'
-    ],
-=======
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
         
@@ -33,7 +27,6 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
->>>>>>> e244da4 (cors preflight allowed wildcards)
     methods: ['GET','POST','DELETE', 'PUT'],
     allowedHeaders: [
         'Content-Type',

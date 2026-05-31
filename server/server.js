@@ -13,7 +13,7 @@ require('dotenv').config();
 
 const app = express();
 const allowedOrigin = [
-        'http://localhost:5173/',
+        'https://localhost:5173/',
         'https://vee-angels.vercel.app'
     ];
 

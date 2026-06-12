@@ -133,7 +133,7 @@ const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
     
     if (!token) {
-        return res.json({
+        res.json({
             success: false,
             message: 'Unauthorized access token'
         });

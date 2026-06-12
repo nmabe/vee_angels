@@ -1,63 +1,65 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const authRouter = require('./routes/auth/authRoutes');
-const adminAngelsRouter = require('./routes/admin/angelsRoutes');
-const angelsRouter = require('./routes/angels/angelsRoutes');
-const userRouter = require('./routes/user/userRoutes');
-const applicationRouter = require('./routes/applicatiions/applicationRoutes');
-const contactRouter = require('./routes/contact/contactRoutes');
-require('dotenv').config();
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
+const authRouter = require('./routes/auth/authRoutes')
+const adminAngelsRouter = require('./routes/admin/angelsRoutes')
+const angelsRouter = require('./routes/angels/angelsRoutes')
+const userRouter = require('./routes/user/userRoutes')
+const applicationRouter = require('./routes/applications/applicationRoutes')
+const contactRouter = require('./routes/contact/contactRoutes')
+const reviewsRouter = require('./routes/reviews/reviews')
+require('dotenv').config()
 
-
-const app = express();
+const app = express()
 const allowedOrigin = [
-        'https://localhost:5173/',
-        'https://vee-angels.vercel.app'
-    ];
+  'https://localhost:5173/',
+  'https://vee-angels.vercel.app'
+]
 
-app.use(cors({
+app.use(
+  cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        
-        if (allowedOrigin.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
+      if (!origin) return callback(null, true)
+
+      if (allowedOrigin.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
     },
-    methods: ['GET','POST','DELETE', 'PUT'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: [
-        'Content-Type',
-        'Authorization',
-        'Cache-Control',
-        'Expires',
-        'Pragma',
+      'Content-Type',
+      'Authorization',
+      'Cache-Control',
+      'Expires',
+      'Pragma'
     ],
     credentials: true
-}));
+  })
+)
 
-app.use(express.json());
-app.use(cookieParser());
-app.use('/api/auth', authRouter);
-app.use('/api/admin/angels', adminAngelsRouter);
-app.use('/api/angels/angels', angelsRouter);
-app.use('/api/user', userRouter);
-app.use('/api/applications', applicationRouter);
-app.use('/api/contact', contactRouter);
+app.use(express.json())
+app.use(cookieParser())
+app.use('/api/auth', authRouter)
+app.use('/api/admin/angels', adminAngelsRouter)
+app.use('/api/angels/angels', angelsRouter)
+app.use('/api/user', userRouter)
+app.use('/api/applications', applicationRouter)
+app.use('/api/contact', contactRouter)
+app.use('/api/reviews', reviewsRouter)
 
-(async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI).then(() => {
-            console.log('\x1b[36mConnected to mongodb');
-        });
-    }
-    catch(err) {
-        console.log(err);
-    }
-})();
+;(async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI).then(() => {
+      console.log('\x1b[36mConnected to mongodb')
+    })
+  } catch (err) {
+    console.log(err)
+  }
+})()
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => console.log('listening on port ' + PORT));
+app.listen(PORT, () => console.log('listening on port ' + PORT))

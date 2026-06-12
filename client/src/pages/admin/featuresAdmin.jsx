@@ -134,7 +134,7 @@ export default function FeaturesAdminPage() {
     // Add backend call here to reset views
     try {
       const res = await axios.post(
-        `${import.meta.env.REACT_APP_API_URL}/api/angels/angels/resetView/`,
+        `${import.meta.env.VITE_API_URL}/api/angels/angels/resetView/`,
         {
           method: 'POST',
           headers: {

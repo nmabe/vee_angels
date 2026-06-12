@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const API_URL =
-  process.env.REACT_APP_API_URL || 'https://vee-angels.onrender.com'
+const API_URL = process.env.VITE_API_URL || 'https://vee-angels.onrender.com'
 
 const initialState = {
   isLoading: false,

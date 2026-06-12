@@ -49,7 +49,7 @@ const AddImages = ({ angelId, onImagesAdded, multiple = true }) => {
       }
 
       const res = await axios.post(
-        `${import.meta.env.REACT_APP_API_URL}/api/admin/angels/uploadImage`,
+        `${import.meta.env.VITE_API_URL}/api/admin/angels/uploadImage`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }

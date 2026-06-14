@@ -30,11 +30,15 @@ function VAngelsLayout() {
     <div className="flex flex-col overflow-hidden">
       {/* Header with fade effect */}
       <div
-        className={`transition-opacity duration-[1s,15s] ${
+        className={`transition-opacity duration-[1s,25s] ${
           showHeader ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <AngelsHeader />
+        {
+           (!location.pathname.includes('/age-verification')) ?
+          <AngelsHeader />
+        : null
+        }
       </div>
       <main className="flex flex-col w-full">
         <Outlet />

@@ -44,7 +44,7 @@ const signInUser = async (req, res) => {
             process.env.JWT_USER_TOKEN,
             {expiresIn: '60m'}
         );
-            console.log('Nou Ziya Khala: ', user);
+            console.log('Nou Ziya Khala: ', user.username);
 
         res.cookie("token", token, {
                     httpOnly: true,
@@ -121,7 +121,7 @@ const signUpUser = async (req, res) => {
 }
 
 const signOutUser = (req, res) => {
-
+    console('Get Your Freaky On Ahhh...');
     res.clearCookie('token');
     return res.status(200).json({
         success: true,

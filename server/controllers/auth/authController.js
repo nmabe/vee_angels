@@ -121,7 +121,7 @@ const signUpUser = async (req, res) => {
 }
 
 const signOutUser = (req, res) => {
-    console('Get Your Freaky On Ahhh...');
+    console.log('Get Your Freaky On Ahhh...');
     res.clearCookie('token');
     return res.status(200).json({
         success: true,

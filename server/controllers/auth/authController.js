@@ -122,7 +122,12 @@ const signUpUser = async (req, res) => {
 
 const signOutUser = (req, res) => {
     console.log('Get Your Freaky On Ahhh...');
-    res.clearCookie('token');
+    res.clearCookie('token', {
+    path: '/',                 // Must match creation domain if explicitly set
+    httpOnly: true,            // Recommended security flag
+    secure: true,              // Must match creation value
+    sameSite: 'none'           // Must match creation value for cross-site cookies
+  });
     return res.status(200).json({
         success: true,
         message:  "Don't be a stranger"

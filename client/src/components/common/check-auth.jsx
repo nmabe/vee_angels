@@ -1,13 +1,21 @@
-import { Navigate, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Navigate, useLocation, Outlet } from 'react-router-dom'
 
-function CheckAuthentication({ isAuthenticated, user, children }) {
-  const ageVerified =
-    typeof window !== 'undefined' ? localStorage.getItem('ageVerified') : null
+function CheckAuthentication({ isAuthenticated, user }) {
   const location = useLocation()
-  // 👤 Get user role safely
+  const [isMounted, setIsMounted] = useState(false)
+  const [ageVerified, setAgeVerified] = useState(null)
 
-  // 🎂 Age verification check (apply to all routes except auth and age-verification)
+  useEffect(() => {
+    setAgeVerified(localStorage.getItem('ageVerified'))
+    setIsMounted(true)
+  }, [])
 
+  // Avoid server/client markup mismatches during the initial hydration pass.
+  if (!isMounted) {
+    return null
+  }
+  // 🎂 Age verification check
   if (
     !ageVerified &&
     !location.pathname.includes('/signIn') &&
@@ -19,6 +27,7 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
     )
   }
 
+  // 🔒 Unauthenticated requests to restricted paths
   if (
     !isAuthenticated &&
     (location.pathname === '/' ||
@@ -26,14 +35,14 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
       location.pathname.includes('/angels/home') ||
       location.pathname.includes('/angels/angels'))
   ) {
-    if (location.pathname === '/'){
-      return <Navigate to="/angels/home" state={{ from: location }} replace />;
-    } 
-      else {
-      return <>{children}</>
+    if (location.pathname === '/') {
+      return <Navigate to="/angels/home" state={{ from: location }} replace />
+    } else {
+      return <Outlet />
     }
   }
 
+  // 🔒 Catch-all fallback authentication redirect
   if (
     !isAuthenticated &&
     !(
@@ -46,6 +55,7 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
     return <Navigate to="/auth/signIn" state={{ from: location }} replace />
   }
 
+  // 🚪 Logged in user hitting authentication paths
   if (
     isAuthenticated &&
     (location.pathname.includes('/signIn') ||
@@ -60,12 +70,14 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
     }
   }
 
+  // 🛡️ Guarding Admin routes
   if (isAuthenticated && location.pathname.includes('/admin')) {
     if (user?.role !== 'admin') {
       return <Navigate to="/unauth-page" state={{ from: location }} replace />
     }
   }
 
+  // 🛡️ Redirecting Admin away from customer-facing portal
   if (
     isAuthenticated &&
     location.pathname.includes('/angels') &&
@@ -74,7 +86,8 @@ function CheckAuthentication({ isAuthenticated, user, children }) {
   ) {
     return <Navigate to="/admin/dashboard" state={{ from: location }} replace />
   }
-  return <>{children}</>
+
+  return <Outlet />
 }
 
 export default CheckAuthentication

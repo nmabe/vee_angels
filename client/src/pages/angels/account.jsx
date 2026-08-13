@@ -9,7 +9,7 @@ import UploadProfPic from '@/components/v-angels/UploadProfPic'
 
 export default function AngelsAccountPage() {
   // Example initial state, replace with real user data as needed
-  let user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user)
   const [username, setUsername] = useState(user?.username || 'Guest')
   const [editing, setEditing] = useState(false)
   const [newPassword, setNewPassword] = useState('')
@@ -18,7 +18,7 @@ export default function AngelsAccountPage() {
   const dispatch = useDispatch()
   const [loadingState, setLoadingState] = useState(false)
   const [uploadedImage, setUploadedImageFile] = useState(null)
-
+  const [picloading, setPicloading] = useState(false)
   // Notifications state
   const [notifications, setNotifications] = useState([
     { id: 1, message: 'Welcome to Vee Angels!', read: false },
@@ -52,6 +52,7 @@ export default function AngelsAccountPage() {
       })
       return
     }
+
     setSaving(true)
     dispatch(changePassword({ id: user.id, password: newPassword })).then(
       (data) => {
@@ -82,10 +83,10 @@ export default function AngelsAccountPage() {
     )
   }
 
+
   // Handle image upload (
   useEffect(() => {
-    if (!user) {
-      user = useSelector((state) => state.auth.user)
+    if (user) {
       setUsername(user?.username || 'Guest')
     }
   }, [user])
@@ -218,7 +219,6 @@ export default function AngelsAccountPage() {
             )}
           </div>
         </div>
-
       </div>
     </div>
   )

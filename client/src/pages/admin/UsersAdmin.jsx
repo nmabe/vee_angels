@@ -46,9 +46,9 @@ const mockUsers = [
 ]
 
 export default function UsersAdminPage() {
-    const { users } = useSelector((state) => state.users)
+  const { users } = useSelector((state) => state.users)
   const [search, setSearch] = useState('')
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const handleStatusToggle = (id) => {
     setUsers((prev) =>
       prev.map((u) =>
@@ -63,7 +63,7 @@ export default function UsersAdminPage() {
   }
   const filteredUsers = []
 
-/*
+  /*
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -72,9 +72,8 @@ export default function UsersAdminPage() {
   )*/
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getUsers())
   }, [getUsers])
-  
 
   return (
     <div className="fixed inset-0 min-h-screen min-w-full bg-gradient-to-br from-[#0f1021] via-[#23243a] to-[#1a1b2f] flex flex-col relative overflow-hidden">
@@ -142,7 +141,7 @@ export default function UsersAdminPage() {
                 >
                   <td className="py-3 px-4">
                     <img
-                      src={user.profPic }
+                      src={user.profPic}
                       alt={user.username}
                       className="bg-white w-12 h-12 rounded-full object-cover border-2 border-cyan-400/30 shadow"
                     />

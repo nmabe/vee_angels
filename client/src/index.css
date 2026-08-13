@@ -1,6 +1,10 @@
+@import url("assets/style/embla/base.css");
+@import url("assets/style/embla/embla.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 /* ... */
 body {

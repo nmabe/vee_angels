@@ -5,12 +5,14 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useHead } from '@unhead/react'
 
 const initialState = {
   username: '',
   email: '',
   password: ''
 }
+
 const AuthSignUp = () => {
   const [formData, setFormData] = useState(initialState)
   const dispatch = useDispatch()
@@ -42,50 +44,78 @@ const AuthSignUp = () => {
     })
   }
 
+  useHead({
+      title: 'Sign Up - Vee Angels',
+      meta: [
+        { name: 'description', content: 'Create a Vee Angels account to access your personalized dashboard, manage your angel investments, and connect with startups.' },
+        { property: 'og:title', content: 'Sign Up - Vee Angels' },
+        { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+        { property: 'og:type', content: 'website' },
+      ],
+      link: [
+        { rel: 'canonical', href: 'https://veeangels.co.za/auth/signUp' }
+      ],
+      // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Vee Angels',
+            url: 'https://veeangels.co.za/auth/signUp',
+          }),
+        },
+      ],
+    });
+
   return (
-    <div className="min-h-screen font-inter text-gray-900 bg-white">
-      <div className="container mx-auto px-4 py-20 max-w-3xl">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-black mb-2 leading-tight">
-            Create an Account with{' '}
-            <span className="bg-gradient-to-r from-[#892f82] to-purple-600 bg-clip-text text-transparent">
-              Vee Angels
-            </span>
-          </h1>
-          <p className="text-base md:text-lg leading-normal text-gray-600">
-            Join the community of trusted angels — sign up to get started
-          </p>
-          <div className="mt-6 flex justify-center">
-            <Link
-              to="/angels/angels"
-              className="bg-gradient-to-r from-[#892f82] to-purple-600 text-white py-2.5 px-6 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transition"
-            >
-              Explore Angels
-            </Link>
+    <>
+      <div className="font-inter text-gray-900 bg-white"></div>
+      <div className="min-h-screen font-inter text-gray-900 bg-white">
+        <div className="container mx-auto px-4 py-20 max-w-3xl">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-black mb-2 leading-tight">
+              Create an Account with{' '}
+              <span className="bg-gradient-to-r from-[#892f82] to-purple-600 bg-clip-text text-transparent">
+                Vee Angels
+              </span>
+            </h1>
+            <p className="text-base md:text-lg leading-normal text-gray-600">
+              Join the community of trusted angels — sign up to get started
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Link
+                to="/angels/angels"
+                className="bg-gradient-to-r from-[#892f82] to-purple-600 text-white py-2.5 px-6 rounded-full font-semibold text-sm shadow-md hover:shadow-lg transition"
+              >
+                Explore Angels
+              </Link>
+            </div>
+          </div>
+          <div className="mx-auto w-full max-w-md space-y-6 bg-white rounded-2xl shadow-lg p-6">
+            <CommonForm
+              formControl={signUpFormControl}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmit={onSubmit}
+              buttonText="Sign Up"
+              buttonClassName="bg-gradient-to-r from-[#892f82] to-purple-600 text-white py-2.5 px-6 rounded-full font-semibold text-sm shadow-md"
+              labelClassName="mb-1 text-gray-700"
+            />
+            <p className="text-center text-sm text-gray-600">
+              Already have an account?{' '}
+              <Link
+                to="/auth/signIn"
+                className="font-medium text-[#892f82] ml-2 hover:underline"
+              >
+                Sign In
+              </Link>
+            </p>
           </div>
         </div>
-        <div className="mx-auto w-full max-w-md space-y-6 bg-white rounded-2xl shadow-lg p-6">
-          <CommonForm
-            formControl={signUpFormControl}
-            formData={formData}
-            setFormData={setFormData}
-            onSubmit={onSubmit}
-            buttonText="Sign Up"
-            buttonClassName="bg-gradient-to-r from-[#892f82] to-purple-600 text-white py-2.5 px-6 rounded-full font-semibold text-sm shadow-md"
-            labelClassName="mb-1 text-gray-700"
-          />
-          <p className="text-center text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link
-              to="/auth/signIn"
-              className="font-medium text-[#892f82] ml-2 hover:underline"
-            >
-              Login
-            </Link>
-          </p>
-        </div>
       </div>
-    </div>
+    </>
   )
 }
 

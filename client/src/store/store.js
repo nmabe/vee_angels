@@ -9,6 +9,15 @@ import applicationSlice from './applications/applications-slice';
 import contactSlice from './contact/contact-slice';
 import contactReportsSlice from './contact/contact-reports-slice';
 
+export function createExtraStore(preloadedState = {}) {
+  return configureStore({
+    reducer: {
+      auth: authReducer,
+    },
+    preloadedState,
+ });
+}
+
 const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -20,7 +29,8 @@ const store = configureStore({
         applications: applicationSlice,
         contact: contactSlice,
         reports: contactReportsSlice
-    }
+    },
+    preloadedState
 });
 
 export default store;

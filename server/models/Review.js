@@ -41,6 +41,8 @@ const reviewSchema = new mongoose.Schema(
 
 // Compound index to ensure one review per user per angel
 reviewSchema.index({ angelId: 1, reviewerId: 1 }, { unique: true })
+reviewSchema.index({ angelId: 1, createdAt: -1 })
+reviewSchema.index({ reviewerId: 1 })
 
 const Review = mongoose.model('Review', reviewSchema)
 module.exports = Review

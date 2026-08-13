@@ -98,7 +98,7 @@ export const calculateAge = (dateOfBirth) => {
   ) {
     age--
   }
-  return age;
+  return age
 }
 
 export default function VAngelsAdminPage() {
@@ -131,7 +131,8 @@ export default function VAngelsAdminPage() {
             description: (
               <h2>
                 {' '}
-                {data?.payload?.angel?.username} is now part of Vee's angels{' '}
+                {data?.payload?.angel?.username} is now part of Vee's
+                angels{' '}
               </h2>
             ),
             action: {
@@ -186,9 +187,7 @@ export default function VAngelsAdminPage() {
 
   return (
     <Fragment>
-      {
-      
-      }
+      {}
       <div className="relative z-10 flex flex-col min-h-screen bg-gradient-to-br from-[#0f1021] via-[#23243a] to-[#1a1b2f]">
         <div className="flex justify-between items-center px-6 pt-8 pb-4">
           <h1 className="text-3xl font-extrabold text-cyan-300 tracking-widest drop-shadow-glow">
@@ -251,5 +250,5 @@ export default function VAngelsAdminPage() {
         </SheetContent>
       </Sheet>
     </Fragment>
-  );
+  )
 }

@@ -59,15 +59,19 @@ router.post('/', authMiddleware, async (req, res) => {
 
     await review.save()
 
-    // Update angel's average rating
-    const reviews = await Review.find({ angelId })
-    const avgRating =
-      reviews.length > 0
-        ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-        : 0
+    // Update angel's average rating using aggregation
+    const ratingStats = await Review.aggregate([
+      { $match: { angelId: new mongoose.Types.ObjectId(angelId) } },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: '$rating' }
+        }
+      }
+    ])
 
     await Angel.findByIdAndUpdate(angelId, {
-      rating: Math.round(avgRating * 10) / 10
+      rating: Math.round((ratingStats[0]?.avgRating || 0) * 10) / 10
     })
 
     // Populate reviewer details
@@ -106,6 +110,7 @@ router.get('/angel/:angelId', async (req, res) => {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(pageSize)
+      .lean()
 
     const totalReviews = await Review.countDocuments({ angelId })
 
@@ -116,9 +121,7 @@ router.get('/angel/:angelId', async (req, res) => {
           _id: null,
           avgRating: { $avg: '$rating' },
           totalReviews: { $sum: 1 },
-          ratingDistribution: {
-            $push: '$rating'
-          }
+          ratingDistribution: { $push: '$rating' }
         }
       }
     ])
@@ -260,16 +263,19 @@ router.delete('/:reviewId', authMiddleware, async (req, res) => {
     const angelId = review.angelId
     await Review.findByIdAndDelete(req.params.reviewId)
 
-    // Update angel's average rating
-    const remainingReviews = await Review.find({ angelId })
-    const avgRating =
-      remainingReviews.length > 0
-        ? remainingReviews.reduce((sum, r) => sum + r.rating, 0) /
-          remainingReviews.length
-        : 0
+    // Update angel's average rating using aggregation
+    const ratingStats = await Review.aggregate([
+      { $match: { angelId: new mongoose.Types.ObjectId(angelId) } },
+      {
+        $group: {
+          _id: null,
+          avgRating: { $avg: '$rating' }
+        }
+      }
+    ])
 
     await Angel.findByIdAndUpdate(angelId, {
-      rating: Math.round(avgRating * 10) / 10
+      rating: Math.round((ratingStats[0]?.avgRating || 0) * 10) / 10
     })
 
     res.json({ message: 'Review deleted successfully' })
@@ -286,9 +292,17 @@ router.get('/rating/:angelId', async (req, res) => {
   try {
     const { angelId } = req.params
 
-    const reviews = await Review.find({ angelId })
+    const stats = await Review.aggregate([
+      { $match: { angelId: new mongoose.Types.ObjectId(angelId) } },
+      {
+        $group: {
+          _id: '$rating',
+          count: { $sum: 1 }
+        }
+      }
+    ])
 
-    if (reviews.length === 0) {
+    if (stats.length === 0) {
       return res.json({
         avgRating: 0,
         totalReviews: 0,
@@ -296,16 +310,22 @@ router.get('/rating/:angelId', async (req, res) => {
       })
     }
 
-    const avgRating =
-      reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    const totalReviews = stats.reduce((sum, item) => sum + item.count, 0)
+    const avgRatingData = await Review.aggregate([
+      { $match: { angelId: new mongoose.Types.ObjectId(angelId) } },
+      { $group: { _id: null, avgRating: { $avg: '$rating' } } }
+    ])
 
-    const ratingDistribution = {
-      5: reviews.filter((r) => r.rating === 5).length,
-      4: reviews.filter((r) => r.rating === 4).length,
-      3: reviews.filter((r) => r.rating === 3).length,
-      2: reviews.filter((r) => r.rating === 2).length,
-      1: reviews.filter((r) => r.rating === 1).length
-    }
+    const ratingDistribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+    stats.forEach(({ _id, count }) => {
+      ratingDistribution[_id] = count
+    })
+
+    res.json({
+      avgRating: Math.round((avgRatingData[0]?.avgRating || 0) * 10) / 10,
+      totalReviews,
+      ratingDistribution
+    })
 
     res.json({
       avgRating: Math.round(avgRating * 10) / 10,

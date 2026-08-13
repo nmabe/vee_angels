@@ -9,10 +9,10 @@ export default function ReportForm({ onClose }) {
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const dispatch = useDispatch();
-  
+  const dispatch = useDispatch()
+
   const { isAuthenticated, user, isLoading } = useSelector(
-      (state) => state.auth
+    (state) => state.auth
   )
 
   function handleSubmit(e) {
@@ -85,13 +85,17 @@ export default function ReportForm({ onClose }) {
     }
   }
 
-
   if (process.env.NODE_ENV === 'development') {
-    console.log('ReportForm rendered with user:', user, 'isAuthenticated:', isAuthenticated);
+    console.log(
+      'ReportForm rendered with user:',
+      user,
+      'isAuthenticated:',
+      isAuthenticated
+    )
   }
 
   if (isLoading) {
-    return <LoadingSkeleton />;
+    return <LoadingSkeleton />
   }
 
   return (
@@ -147,6 +151,5 @@ export default function ReportForm({ onClose }) {
         </div>
       )}
     </div>
-  );
+  )
 }
-

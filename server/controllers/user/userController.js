@@ -1,8 +1,8 @@
 const User = require('../../models/User')
 const bcrypt = require('bcryptjs')
-const Comments = require('../../models/Comments');
-const { imageUploadUtil, imageDeleteUtil } = require('../../helpers/cloudinary');
-const { refreshCookie } = require('../../helpers/cookie');
+const Comments = require('../../models/Comments')
+const { imageUploadUtil, imageDeleteUtil } = require('../../helpers/cloudinary')
+const { refreshCookie } = require('../../helpers/cookie')
 
 const changePassword = async (req, res) => {
   const { password } = req.body
@@ -55,20 +55,16 @@ const changePassword = async (req, res) => {
 }
 
 const changeProfilePic = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params
 
-  
-  let ret = {};
+  let ret = {}
   try {
-    
-    const b64 = Buffer.from(req.file.buffer).toString('base64');
-    const url = 'data:' + req.file.mimetype + ';base64,' + b64;
-    ret = await imageUploadUtil(url);
-    
-    
-    if (ret.url) {
-      const imageUrl = ret.url; // Assuming you want the first uploaded image
+    const b64 = Buffer.from(req.file.buffer).toString('base64')
+    const url = 'data:' + req.file.mimetype + ';base64,' + b64
+    ret = await imageUploadUtil(url)
 
+    if (ret.url) {
+      const imageUrl = ret.url // Assuming you want the first uploaded image
 
       const user = await User.findById(id)
       if (!user) {
@@ -78,33 +74,42 @@ const changeProfilePic = async (req, res, next) => {
         })
       }
 
-    if (user.profPic) {
+      if (user.profPic) {
         try {
-            const image = user.profPic;
-            const deleteResult = await imageDeleteUtil(image);
-            if (!deleteResult.success) {
-                res.status(500).json({
-                    success: false,
-                    message: deleteResult.message
-                });
-                return; // Exit if deletion failed
-            }else {
-              user.profPic = imageUrl;
-              await user.save().then((newUser) => {
-                refreshCookie(res, newUser, 'Profile picture updated successfully.');
-              });
+          const image = user.profPic
+          const deleteResult = await imageDeleteUtil(image)
+          if (!deleteResult.success) {
+            res.status(500).json({
+              success: false,
+              message: deleteResult.message
+            })
+            return // Exit if deletion failed
+          } else {
+            user.profPic = imageUrl
+            await user.save().then((newUser) => {
+              refreshCookie(
+                res,
+                {
+                  id: newUser._id,
+                  role: newUser.role,
+                  email: newUser.email,
+                  username: newUser.username,
+                  profPic: newUser.profPic
+                },
+                'Profile picture updated successfully.'
+              )
+            })
           }
-
         } catch (err) {
-          console.error('Error deleting old profile picture:', err);
+          console.error('Error deleting old profile picture:', err)
         }
       }
     } else {
       res.status(500).json({
         success: false,
         message: 'File Upload Error, Try with different pictures.'
-      })  
-    } 
+      })
+    }
   } catch (error) {
     console.error('Error updating profile picture:', error)
     res.status(500).json({
@@ -116,21 +121,11 @@ const changeProfilePic = async (req, res, next) => {
 
 const getUsers = async (req, res) => {
   try {
-    User.find()
-      .sort({ createdAt: -1 })
-      .then((users) => {
-        res.status(200).json({
-          success: true,
-          users
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-        res.status(404).json({
-          success: false,
-          message: 'Error Getting users'
-        })
-      })
+    const users = await User.find().sort({ createdAt: -1 }).lean()
+    res.status(200).json({
+      success: true,
+      users
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json({

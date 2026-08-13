@@ -1,11 +1,17 @@
+import { useEffect, useState } from 'react'
 import { StarRating } from './StarRating'
 import { Trash2, Edit2 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 
 export const ReviewItem = ({ review, currentUserId, onEdit, onDelete }) => {
+  const [hasMounted, setHasMounted] = useState(false)
   const isAuthor = review.reviewerId._id === currentUserId
   const createdDate = new Date(review.createdAt)
   const isEdited = new Date(review.updatedAt) > createdDate
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this review?')) {
@@ -33,10 +39,11 @@ export const ReviewItem = ({ review, currentUserId, onEdit, onDelete }) => {
               {review.reviewerId.username}
             </p>
             <p className="text-xs text-gray-500">
-              {formatDistanceToNow(new Date(review.createdAt), {
-                addSuffix: true
-              })}
-              {isEdited && ' (edited)'}
+              {hasMounted
+                ? `${formatDistanceToNow(new Date(review.createdAt), {
+                    addSuffix: true
+                  })}${isEdited ? ' (edited)' : ''}`
+                : 'just now'}
             </p>
           </div>
         </div>

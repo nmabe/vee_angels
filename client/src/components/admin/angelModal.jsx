@@ -14,8 +14,16 @@ import {
   SelectValue
 } from '../ui/select'
 import React, { Fragment, useEffect, useState, useCallback } from 'react'
-import { PlusCircleIcon, UserRoundPen, Lock, LockOpen, ShieldBan, ShieldCheck, LucideShieldCheck } from 'lucide-react'
-import { AvatarFallback, AvatarImage, Avatar } from '../ui/avatar';
+import {
+  PlusCircleIcon,
+  UserRoundPen,
+  Lock,
+  LockOpen,
+  ShieldBan,
+  ShieldCheck,
+  LucideShieldCheck
+} from 'lucide-react'
+import { AvatarFallback, AvatarImage, Avatar } from '../ui/avatar'
 import { calculateAge } from '@/pages/admin/vAngelsAdmin'
 import { toast } from 'sonner'
 import { useDispatch } from 'react-redux'
@@ -29,8 +37,8 @@ import {
 import AddImages from './addImages'
 
 const AngelModal = ({ angel }) => {
-  let formData = new FormData();
-  formData = angel;
+  let formData = new FormData()
+  formData = angel
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [editMode, setEditMode] = useState(true)
   const [userFormData, setUserFormData] = useState({
@@ -40,24 +48,21 @@ const AngelModal = ({ angel }) => {
 
   const dispatch = useDispatch()
 
-
   const activateAngel = (e) => {
-    e.preventDefault();
-    const id = userFormData._id;
+    e.preventDefault()
+    const id = userFormData._id
 
     dispatch(activateAnAngel(id)).then((data) => {
       if (data?.payload?.success) {
         dispatch(getAngels())
-        setUserFormData(angel);
+        setUserFormData(angel)
         toast.success(`An Angel was successfully update`, {
           description: (
             <h2>{`${userFormData?.username} Angel has been updated`}</h2>
           ),
           action: {
             label: 'Dismiss',
-            onClick: () => {
-              
-            }
+            onClick: () => {}
           }
         })
       } else {
@@ -70,27 +75,25 @@ const AngelModal = ({ angel }) => {
           variant: 'destructive'
         })
       }
-    }) 
-  };
+    })
+  }
 
   const deactivateAngel = (e) => {
-    e.preventDefault();
-    const id = userFormData._id;
+    e.preventDefault()
+    const id = userFormData._id
 
     if (!editMode) {
       dispatch(deactivateAnAngel(id)).then((data) => {
         if (data?.payload?.success) {
           dispatch(getAngels())
-          setUserFormData(angel);
+          setUserFormData(angel)
           toast.success(`An Angel was successfully update`, {
             description: (
               <h2>{`${userFormData?.username} Angel has been updated`}</h2>
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => {
-                
-              }
+              onClick: () => {}
             }
           })
         } else {
@@ -101,10 +104,9 @@ const AngelModal = ({ angel }) => {
               onClick: () => {}
             },
             variant: 'destructive'
-      });
-  
-      };
-      });
+          })
+        }
+      })
     } else {
       toast.info('Edit mode is disabled', {
         description: 'Something Went Wrong!!!',
@@ -118,7 +120,7 @@ const AngelModal = ({ angel }) => {
   }
 
   const onImagesAdded = (newImages) => {
-    const id = userFormData._id;
+    const id = userFormData._id
 
     const updatedUserFormData = {
       ...userFormData,
@@ -138,7 +140,8 @@ const AngelModal = ({ angel }) => {
           action: {
             label: 'Dismiss',
             onClick: () => {
-              {}
+              {
+              }
             }
           }
         })
@@ -147,7 +150,7 @@ const AngelModal = ({ angel }) => {
           description: 'Something Went Wrong!!!',
           action: {
             label: 'Dismiss',
-            onClick: () => {  }
+            onClick: () => {}
           },
           variant: 'destructive'
         })
@@ -170,14 +173,19 @@ const AngelModal = ({ angel }) => {
         return
       }
       const deletedImage = userFormData.profPicUrl[index]
-      const updatedImages = userFormData.profPicUrl.filter((_, i) => i !== index)
+      const updatedImages = userFormData.profPicUrl.filter(
+        (_, i) => i !== index
+      )
       setUserFormData({
         ...userFormData,
         profPicUrl: updatedImages
       })
 
       dispatch(
-        deleteAngelImage({ angelData: { ...userFormData, profPicUrl: updatedImages }, image: deletedImage })
+        deleteAngelImage({
+          angelData: { ...userFormData, profPicUrl: updatedImages },
+          image: deletedImage
+        })
       ).then((data) => {
         if (data?.payload?.success) {
           dispatch(getAngels())
@@ -188,8 +196,7 @@ const AngelModal = ({ angel }) => {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => {
-              }
+              onClick: () => {}
             },
             variant: 'success'
           })
@@ -212,7 +219,6 @@ const AngelModal = ({ angel }) => {
     e.preventDefault()
     setEditMode(!editMode)
   }
-
 
   const submitAngel = (e) => {
     e.preventDefault()
@@ -239,9 +245,7 @@ const AngelModal = ({ angel }) => {
             ),
             action: {
               label: 'Dismiss',
-              onClick: () => {
-                
-              }
+              onClick: () => {}
             }
           })
         } else {
@@ -258,7 +262,7 @@ const AngelModal = ({ angel }) => {
     }
   }
   const deactivateBtns = () => {
-    const status = angel.status;
+    const status = angel.status
     if (status === 'Active') {
       return (
         <div
@@ -268,7 +272,7 @@ const AngelModal = ({ angel }) => {
           Deactivate <ShieldBan className="" />
         </div>
       )
-    }else {
+    } else {
       return (
         <div
           className="text-m text-gray-400 flex gap-2 bg-[#892f82]-100 border border-gray-200 rounded py-1 ml-2 px-1 cursor-pointer hover:text-[#892f82]"
@@ -325,7 +329,13 @@ const AngelModal = ({ angel }) => {
             <UserRoundPen className="w-4 h-4 mx-auto" />
           </span>
         </DialogTrigger>
-        <DialogContent className={(angel.status === 'Active') ? 'bg-white max-w-4xl max-h-[80vh] overflow-auto' : 'bg-red-500 max-w-4xl max-h-[80vh] overflow-auto'}>
+        <DialogContent
+          className={
+            angel.status === 'Active'
+              ? 'bg-white max-w-4xl max-h-[80vh] overflow-auto'
+              : 'bg-red-500 max-w-4xl max-h-[80vh] overflow-auto'
+          }
+        >
           <DialogHeader className="">
             <DialogTitle className="text-3xl font-bold text-[#892f82] underline decoration-double decoration-[#892f82] decoration-2 underline-offset-4">
               {angel.username}
@@ -697,7 +707,11 @@ const AngelModal = ({ angel }) => {
             <AddImages onImagesAdded={onImagesAdded} />
             {angel.profPicUrl.map((url, index) => {
               return (
-                <div key={index} className="w-[120px] h-[180px] " onClick={() => setCurrentImageIndex(index)}>
+                <div
+                  key={index}
+                  className="w-[120px] h-[180px] "
+                  onClick={() => setCurrentImageIndex(index)}
+                >
                   <div
                     className="w-4 h-4 right-1 bg-red-400 rounded-[50px]  text-xs text-extrabold text-white align-center justify-center hover:cursor-pointer hover:bg-black px-1 px-1 z-10 relative"
                     onClick={deleteImage(index)}

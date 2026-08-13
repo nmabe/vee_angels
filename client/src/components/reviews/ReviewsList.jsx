@@ -11,6 +11,13 @@ export const ReviewsList = ({
 }) => {
   const [sortBy, setSortBy] = useState('newest')
   const [sortedReviews, setSortedReviews] = useState(reviews)
+  const [currentUserId, setCurrentUserId] = useState(null)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUserId(localStorage.getItem('userId'))
+    }
+  }, [])
 
   useEffect(() => {
     let sorted = [...reviews]
@@ -74,7 +81,7 @@ export const ReviewsList = ({
           <ReviewItem
             key={review._id}
             review={review}
-            currentUserId={localStorage.getItem('userId')}
+            currentUserId={currentUserId}
             onEdit={onEdit}
             onDelete={onDelete}
           />

@@ -44,7 +44,7 @@ const signInUser = async (req, res) => {
             process.env.JWT_USER_TOKEN,
             {expiresIn: '60m'}
         );
-            console.log('Nou Ziya Khala: ', user);
+            console.log('Nou Ziya Khala: ', user.username);
 
         res.cookie("token", token, {
                     httpOnly: true,
@@ -121,8 +121,13 @@ const signUpUser = async (req, res) => {
 }
 
 const signOutUser = (req, res) => {
-
-    res.clearCookie('token');
+    console.log('Get Your Freaky On Ahhh...');
+    res.clearCookie('token', {
+    path: '/',                 // Must match creation domain if explicitly set
+    httpOnly: true,            // Recommended security flag
+    secure: true,              // Must match creation value
+    sameSite: 'none'           // Must match creation value for cross-site cookies
+  });
     return res.status(200).json({
         success: true,
         message:  "Don't be a stranger"

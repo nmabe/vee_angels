@@ -24,7 +24,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import ImageCarousel from './imageCarousel'
 import AngelPopUpCard from './angelPopUpCard'
 import { calculateAge } from '@/pages/admin/vAngelsAdmin'
-import Socials from './socials';
+import Socials from './socials'
 
 export const AngelCard = ({ userId = 0, angel, likes }) => {
   const {
@@ -91,7 +91,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
             description: data.payload.message,
             action: {
               label: 'Dismiss',
-              onClick: () => {}          
+              onClick: () => {}
             },
             variant: 'destructive'
           })
@@ -132,7 +132,7 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
     dispatch(getLikes(_id))
   }, [likes, dispatch, _id])
 
-//  const randomNumber = Math.floor(Math.random() * profPicUrl.length)
+  //  const randomNumber = Math.floor(Math.random() * profPicUrl.length)
 
   return (
     <div className="xs:h-[390px] max-w-sm h-[340px] bg-white relative my-auto overflow-hidden rounded-xl shadow-xl shadow-purple-300/10 hover:shadow-2xl hover:shadow-purple-400/40 transition-all duration-500 hover:-translate-y-2 scale-[0.98] hover:scale-[1.02]">
@@ -232,7 +232,6 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
               </li>
 
               <Socials angel={angel} />
-              
             </ul>
           </div>
         </div>

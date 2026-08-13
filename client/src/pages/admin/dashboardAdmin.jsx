@@ -20,7 +20,7 @@ import {
   PointElement,
   Tooltip,
   Legend
-} from 'chart.js';
+} from 'chart.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { getApplications } from '@/store/applications/applications-slice'
 import { getAngels } from '@/store/admin/angel-slice'
@@ -28,7 +28,6 @@ import { getUsers } from '@/store/angels/user-slice'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { getReports } from '@/store/contact/contact-reports-slice'
-
 
 ChartJS.register(
   LineElement,
@@ -41,14 +40,13 @@ ChartJS.register(
 )
 
 export default function DashboardAdminPage() {
-    const signUps = useSelector((state) => state.applications.applications)
-    const { angelsList } = useSelector((state) => state.adminAngel)
-    const { users } = useSelector((state) => state.users)
-    const reports  = useSelector((state) => state.reports.reports.reports)
-    const navigate = useNavigate();
+  const signUps = useSelector((state) => state.applications.applications)
+  const { angelsList } = useSelector((state) => state.adminAngel)
+  const { users } = useSelector((state) => state.users)
+  const reports = useSelector((state) => state.reports.reports.reports)
+  const navigate = useNavigate()
 
-    const dispatch = useDispatch();
-
+  const dispatch = useDispatch()
 
   // Mock data for demonstration
   const stats = [
@@ -106,7 +104,6 @@ export default function DashboardAdminPage() {
     }
   ])
 
-
   // Chart data
   const lineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -140,20 +137,20 @@ export default function DashboardAdminPage() {
     switch (action) {
       case 'Manage Angels':
         // Navigate to angels management page
-        navigate('/admin/angels');
-        break;
+        navigate('/admin/angels')
+        break
       case 'View Reports':
         // Navigate to reports page
-        navigate('/admin/features');
-        break;
+        navigate('/admin/features')
+        break
       case 'Settings':
         // Navigate to settings page
-        navigate('/admin/features');
-        break;
+        navigate('/admin/features')
+        break
       case 'Export Data':
         // Trigger data export functionality
         alert('Exporting data...')
-        break;
+        break
       default:
         toast.error('Unknown action', {
           description: 'The action you selected is not recognized.',
@@ -162,17 +159,17 @@ export default function DashboardAdminPage() {
             onClick: () => {}
           },
           variant: 'destructive'
-        });
-        break;
+        })
+        break
     }
   }
-  
+
   useEffect(() => {
-    dispatch(getApplications());
-    dispatch(getAngels());
-    dispatch(getUsers());
-    dispatch(getReports());
-  }, [dispatch]);
+    dispatch(getApplications())
+    dispatch(getAngels())
+    dispatch(getUsers())
+    dispatch(getReports())
+  }, [dispatch])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f1021] via-[#23243a] to-[#1a1b2f] py-10 px-2 md:px-10 relative overflow-hidden">
@@ -181,7 +178,8 @@ export default function DashboardAdminPage() {
         <div className="w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(0,255,247,0.08)_0%,transparent_70%)]"></div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       </div>
-      <h1 className="text-4xl font-extrabold text-cyan-300 mb-10 text-center tracking-widest z-10 drop-shadow-glow">ADMIN DASHBOARD
+      <h1 className="text-4xl font-extrabold text-cyan-300 mb-10 text-center tracking-widest z-10 drop-shadow-glow">
+        ADMIN DASHBOARD
       </h1>
       {/* Stats Cards */}
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
@@ -219,8 +217,8 @@ export default function DashboardAdminPage() {
                 responsive: true,
                 plugins: { legend: { display: false } },
                 scales: {
-                  y: { beginAtZero: true, grid: { color: "#23243a" } },
-                  x: { grid: { color: "#23243a" } }
+                  y: { beginAtZero: true, grid: { color: '#23243a' } },
+                  x: { grid: { color: '#23243a' } }
                 }
               }}
             />
@@ -237,7 +235,9 @@ export default function DashboardAdminPage() {
               <Doughnut
                 data={doughnutData}
                 options={{
-                  plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } }
+                  plugins: {
+                    legend: { position: 'bottom', labels: { color: '#fff' } }
+                  }
                 }}
               />
             </div>
@@ -304,7 +304,9 @@ export default function DashboardAdminPage() {
                 >
                   {report.status}
                 </span>
-                <span className="text-xs text-pink-400">{report.createdAt}</span>
+                <span className="text-xs text-pink-400">
+                  {report.createdAt}
+                </span>
               </li>
             ))}
           </ul>

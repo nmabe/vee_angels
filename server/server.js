@@ -51,7 +51,6 @@ app.use('/api/user', userRouter)
 app.use('/api/applications', applicationRouter)
 app.use('/api/contact', contactRouter)
 app.use('/api/reviews', reviewsRouter)
-
 ;(async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI).then(() => {

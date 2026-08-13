@@ -14,15 +14,15 @@ const AngelsFilter = ({filter, handleFilter}) =>  {
       <div className="p-4 overflow-auto hidden">
         
       {
-        Object.keys(angelFilterOptions).map(item => (
-            <Fragment>
+        Object.keys(angelFilterOptions).map((item, index) => (
+            <Fragment key={index}>
                 <div className='mb-6' >
                     <h4 className="text-base font-bold mt-2">{item}</h4>
                     <div className="grid gap-2 mt-2">
                         {
                             angelFilterOptions[item].map((filterItem, i) => 
                             <Label
-                              key={i}
+                              key={filterItem.id}
                               htmlFor={filterItem.id}
                               className='flex cursor-pointer items-center font-normal gap-2'
                               >

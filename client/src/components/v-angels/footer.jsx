@@ -46,10 +46,10 @@ export default function AngelsFooter() {
   }
 
   return (
-    <footer className="bg-gradient-to-br from-[#892f82] to-[#6b1f5c] text-white py-16">
-      <div className="container mx-auto px-4 md:px-6 max-w-7xl">
+    <footer className="bg-gradient-to-br from-[#892f82] to-[#6b1f5c] text-white py-10">
+      <div className="container mx-auto px-2 md:px-3 max-w-7xl">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12"
+          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -57,10 +57,10 @@ export default function AngelsFooter() {
         >
           {/* Brand */}
           <motion.div variants={fadeIn}>
-            <h3 className="text-2xl  mb-4">  <span style={{fontFamily: '"Comfortaa Variable", system-ui'}} className="first-letter:text-black first-letter:bg-white first-letter:text-4xl first-letter:font-bold relative left-[-15px] text-[28px] font-extrabold font-sans font-stretch-expanded tracking-tighter capitalize">
+            <h5 className="text-xl  mb-2">  <span style={{fontFamily: '"gugi", system-ui'}} className="first-letter:text-[#892f82] first-letter:bg-white first-letter:text-2xl first-letter:font-bold relative text-[18px] font-extrabold font-sans font-stretch-expanded tracking-tighter capitalize text-red">
             Vee Angels
-          </span></h3>
-            <p className="text-white/80 leading-relaxed">
+          </span></h5>
+            <p className="text-white/80 leading-relaxed text-sm">
               Connecting caring professionals with clients in need of trusted
               support.
             </p>
@@ -68,8 +68,8 @@ export default function AngelsFooter() {
 
           {/* Quick Links */}
           <motion.div variants={fadeIn}>
-            <h4 className="font-bold mb-4 text-lg">Quick Links</h4>
-            <ul className="space-y-2">
+            <h6 className="font-bold mb-1 text-md">Quick Links</h6>
+            <ul className="space-y-2 text-sm">
               {[
                 { label: 'Browse Angels', link: '/angels/angels' },
                 { label: 'Become an Angel', link: '/angels/applications' },
@@ -81,7 +81,7 @@ export default function AngelsFooter() {
                 <li key={i}>
                   <Link
                     to={item.link}
-                    className="text-white/80 hover:text-white transition"
+                    className="text-white/80 hover:text-white transition text-sm"
                   >
                     {item.label}
                   </Link>
@@ -92,8 +92,8 @@ export default function AngelsFooter() {
 
           {/* Support */}
           <motion.div variants={fadeIn}>
-            <h4 className="font-bold mb-4 text-lg">Support</h4>
-            <ul className="space-y-2">
+            <h6 className="font-bold mb-1 text-md">Support</h6>
+            <ul className="space-y-2 text-sm">
               {[
                 { id: 'help', label: 'Help Center' },
                 { id: 'contact', label: 'Contact Us' },
@@ -102,7 +102,7 @@ export default function AngelsFooter() {
                 <li key={i}>
                   <button
                     onClick={() => setOpenDialog(item.id)}
-                    className="text-white/80 hover:text-white transition text-left"
+                    className="text-white/80 hover:text-white transition text-left text-sm"
                   >
                     {item.label}
                   </button>
@@ -113,8 +113,8 @@ export default function AngelsFooter() {
 
           {/* Legal */}
           <motion.div variants={fadeIn}>
-            <h4 className="font-bold mb-4 text-lg">Legal</h4>
-            <ul className="space-y-2">
+            <h6 className="font-bold mb-1 text-md">Legal</h6>
+            <ul className="space-y-2 text-sm">
               {[
                 { id: 'privacy', label: 'Privacy Policy' },
                 { id: 'terms', label: 'Terms & Conditions' },
@@ -123,7 +123,7 @@ export default function AngelsFooter() {
                 <li key={i}>
                   <button
                     onClick={() => setOpenDialog(item.id)}
-                    className="text-white/80 hover:text-white transition text-left"
+                    className="text-white/80 hover:text-white transition text-left text-sm"
                   >
                     {item.label}
                   </button>
@@ -138,7 +138,7 @@ export default function AngelsFooter() {
           variants={fadeIn}
           className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left text-white/80"
         >
-          <p>&copy; 2025 Vee Angels. All rights reserved.</p>
+          <p>&copy; 2026 Vee Angels. All rights reserved.</p>
           <div className="flex gap-4 mt-6 md:mt-0">
             <a
               href="https://x.com/veeangels18nv?s=11"

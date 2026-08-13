@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 
 export default function AgeVerificationPage() {
-  const [verified, setVerified] = useState(false)
   const [denied, setDenied] = useState(false)
   const [userConfirmed, setUserConfirmed] = useState(false)
   const navigate = useNavigate()
@@ -57,7 +56,7 @@ export default function AgeVerificationPage() {
         <div className="text-center">
           {/* Logo/Branding */}
           <motion.div variants={slideUp} className="mb-8 md:mb-12">
-            <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-[#892f82] to-purple-600 bg-clip-text text-transparent mb-2">
+            <h1 className="font-gugi text-5xl md:text-6xl font-black bg-gradient-to-r from-[#892f82] to-purple-600 bg-clip-text text-transparent mb-2">
               Vee Angels
             </h1>
             <p className="text-gray-500 text-lg">Experience the Extraordinary</p>

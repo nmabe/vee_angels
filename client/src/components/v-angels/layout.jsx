@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import AngelsHeader from './header'
 import React, { useState, useEffect } from 'react'
 import AngelsFooter from './footer'
@@ -6,7 +6,8 @@ import AngelsFooter from './footer'
 function VAngelsLayout() {
   const [showHeader, setShowHeader] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
-
+  const location = useLocation();
+  
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
@@ -30,7 +31,7 @@ function VAngelsLayout() {
     <div className="flex flex-col overflow-hidden">
       {/* Header with fade effect */}
       <div
-        className={`transition-opacity duration-[1s,25s] ${
+        className={`transition-opacity duration-&lsqb;1s,25s&rsqb; ${
           showHeader ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >

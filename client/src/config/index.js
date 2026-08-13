@@ -27,7 +27,7 @@ export const signInFormControl = [
     },{
         name: 'password',
         label: 'Password',
-        placeholder: 'Create a password',
+        placeholder: 'Enter your password',
         contentType: 'input',
         type: 'password'
     },

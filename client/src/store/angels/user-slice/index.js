@@ -53,10 +53,12 @@ export const changeProfilePic = createAsyncThunk(
           'Content-type': 'application/json'
         }
       }
-    )
+    );
     return res?.data
   }
 )
+
+
 
 const usersSlice = createSlice({
   name: 'users',
@@ -86,6 +88,26 @@ const usersSlice = createSlice({
         state.users = action.payload.users
       })
       .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false
+        state.users = null
+      }).addCase(changePassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.users = action.payload.user
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.users = null
+      }).addCase(changeProfilePic.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(changeProfilePic.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.users = action.payload.user
+      })
+      .addCase(changeProfilePic.rejected, (state, action) => {
         state.isLoading = false
         state.users = null
       })

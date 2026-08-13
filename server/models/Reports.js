@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const reportSchema = new mongoose.Schema({
-  
   title: {
     type: String,
     trim: true,
@@ -44,12 +43,12 @@ const reportSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+})
 
 // Update the updatedAt timestamp before saving
-reportSchema.pre('save', function(next) {
-  this.updatedAt = Date.now();
-  next();
-});
+reportSchema.pre('save', function (next) {
+  this.updatedAt = Date.now()
+  next()
+})
 
-module.exports = mongoose.model('Report', reportSchema);
+module.exports = mongoose.model('Report', reportSchema)

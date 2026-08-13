@@ -18,7 +18,7 @@ export default function Socials({ angel }) {
 
             
             <a
-              href={`http://wa.me/0${angel.phoneNumber}`}
+              href={`http://wa.me/+27${angel.phoneNumber}`}
               aria-label="WhatsApp"
               target="_blank"
               className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white hover:text-[#6b1f5c] text-white transition-colors"

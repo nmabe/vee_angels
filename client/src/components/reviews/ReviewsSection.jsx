@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useReviews } from '../../hooks/useReviews'
 import { ReviewForm } from './ReviewForm'
 import { RatingSummary } from './RatingSummary'
@@ -17,10 +17,16 @@ export const ReviewsSection = ({ angelId }) => {
   } = useReviews(angelId)
   const [showForm, setShowForm] = useState(false)
   const [editingReview, setEditingReview] = useState(null)
+  const [currentUserId, setCurrentUserId] = useState(null)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUserId(localStorage.getItem('userId'))
+    }
+  }, [])
 
   // Check if user has already reviewed
-  const currentUserId = localStorage.getItem('userId')
-  const userReview = reviews.find((r) => r.reviewerId._id === currentUserId)
+  const userReview = reviews.find((r) => r.reviewerId?._id === currentUserId)
 
   const handleSubmitReview = async (data) => {
     try {

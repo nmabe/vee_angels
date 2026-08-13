@@ -48,6 +48,21 @@ export const authCheck = createAsyncThunk('/auth/auth-check/', async () => {
   return res.data
 })
 
+export const uploadUserImage = createAsyncThunk(
+  '/user/uploadProfilePic/',
+  async ({ formData, id }) => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/user/uploadProfilePic/${id}/`,
+      formData,
+      {
+        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+    )
+    return res?.data
+  }
+)
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -107,6 +122,16 @@ const authSlice = createSlice({
         state.isLoading = false
         state.user = null
         state.isAuthenticated = true
+      })
+      .addCase(uploadUserImage.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.user = action.payload.user.user
+      })
+      .addCase(uploadUserImage.rejected, (state, action) => {
+        state.isLoading = false
+      })
+      .addCase(uploadUserImage.pending, (state) => {
+        state.isLoading = true
       })
   }
 })

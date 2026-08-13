@@ -1,33 +1,33 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const messageSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
     email: {
       type: String,
       required: true,
       trim: true,
       lowercase: true,
-      match: /.+\@.+\..+/,
+      match: /.+\@.+\..+/
     },
     message: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
     read: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-);
+)
 
-const Messages = mongoose.model('Messages', messageSchema);
+const Messages = mongoose.model('Messages', messageSchema)
 module.exports = Messages

@@ -1,7 +1,8 @@
 const { getUsers, changePassword, changeProfilePic } = require('../../controllers/user/userController');
 const express = require('express');
-const router = express.Router();
 const { upload } = require('../../helpers/cloudinary');
+
+const router = express.Router();
 
 
 router.get('/get', getUsers);

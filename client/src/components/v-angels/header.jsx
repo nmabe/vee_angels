@@ -2,7 +2,7 @@ import react, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { useDispatch, useSelector } from 'react-redux'
-import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from '../ui/sheet'
 import { Button } from '../ui/button'
 import { Menu, User, LogOut, Heart, LogInIcon, Info } from 'lucide-react'
 import { angelHeaderMenuItems } from '@/config'
@@ -46,7 +46,7 @@ const RightMenuNavSection = () => {
   )
 }
 
-const RightUserMenuNavSection = () => {
+const RightUserMenuNavSection = ({ setIsOpen }) => {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -79,14 +79,20 @@ const RightUserMenuNavSection = () => {
           <DropdownMenuLabel>Logged in as {user.username}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => navigate('/angels/account')}>
+            <DropdownMenuItem onClick={() => {
+              navigate('/angels/account')
+              setIsOpen(false);
+            }
+              }>
               <User />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => dispatch(signOutUser())}>
+          <DropdownMenuItem onClick={() => {
+            dispatch(signOutUser());
+            }}>
             <LogOut />
             <span>Log out</span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
@@ -102,6 +108,7 @@ const RightUserMenuNavSection = () => {
 export default function AngelHeader() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   const [helpOpen, setHelpOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     function onKey(e) {
@@ -113,6 +120,7 @@ export default function AngelHeader() {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
+
 
   return (
     <div className="fixed top-[25px] z-50 bg-background shadow-md border border-gray-200 w-[95%] ml-2 mr-2 mb-10 rounded-[30px] lg:w-[98%]">
@@ -129,7 +137,7 @@ export default function AngelHeader() {
             Vee Angels
           </span>
         </Link>
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
               variant="outline"
@@ -142,7 +150,7 @@ export default function AngelHeader() {
           </SheetTrigger>
           <SheetContent side="left" className="pt-20 w-full max-w-xs">
             <div>
-              <RightUserMenuNavSection />
+              <RightUserMenuNavSection setIsOpen={setIsOpen} />
             </div>
             <hr className="h-1 w-[90%] self-center bg-gray-300 m-2 rounded" />
             <MenuNavSections />
@@ -151,7 +159,7 @@ export default function AngelHeader() {
         <div className="hidden lg:block">
           <MenuNavSections />
         </div>
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-1">
           <Info
             onClick={() => setHelpOpen(true)}
             className="text-sm font-medium hover:text-[#892f82] hover:cursor-pointer"

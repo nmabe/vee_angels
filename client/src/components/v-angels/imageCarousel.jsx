@@ -11,24 +11,16 @@ import axios from 'axios'
 import { calculateAge } from '@/pages/admin/vAngelsAdmin'
 import { getAngels } from '@/store/admin/angel-slice'
 
-const getDeviceId = () => {
-  let deviceId = localStorage.getItem('deviceId')
-  if (!deviceId) {
-    deviceId =
-      crypto.randomUUID?.() ||
-      `device-${Date.now()}-${Math.random().toString(36)}`
-    localStorage.setItem('deviceId', deviceId)
-  }
-  return deviceId
-}
+
 
 export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const options = React.useMemo(() => ({ loop: true, duration: 30 }), [])
   const [hideDetails, setHideDetails] = React.useState(false)
   const [controlsOpacityClass, setControlsOpacityClass] = React.useState('')
   const [likes, setLikes] = React.useState([])
+  const [isMounted, setIsMounted] = React.useState(false)
   const { _id, username, address, profPicUrl } = angel
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch()
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Fade()])
@@ -52,6 +44,20 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     setTimeout(() => {
       setControlsOpacityClass('')
     }, 10000)
+  }
+
+  const getHydrationSafeTimestamp = () =>
+    typeof window === 'undefined' ? 0 : Date.now()
+
+  const getDeviceId = () => {
+    let deviceId = localStorage.getItem('deviceId')
+    if (!deviceId) {
+      deviceId =
+        crypto.randomUUID?.() ||
+        `device-${getHydrationSafeTimestamp()}-${Math.random().toString(36)}s`
+      localStorage.setItem('deviceId', deviceId)
+    }
+    return deviceId
   }
 
   const updateViewCount = async (angelId, deviceId) => {
@@ -135,16 +141,16 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
       {!hideDetails ? (
         <div className="absolute bottom-0 left-0 w-full flex flex-col justify-end pointer-events-none z-50">
           {/* Info Panel */}
-          <div className="p-3 pb-6 pt-16 space-y-3 bg-gradient-to-t from-white/95 via-white/70 to-transparent pointer-events-auto">
+          <div className="p-3 pb-2 pt-16 space-y-1 bg-gradient-to-t from-black/80 via-black/60 to-transparent pointer-events-auto">
             {/* Name Section */}
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-semibold text-black">
+            <div className="flex items-center gap-1">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-white">
                 {username}
               </h1>
             </div>
 
             {/* Location/Age Section */}
-            <h2 className="text-xl sm:text-2xl text-purple-900 font-semibold">
+            <h2 className="text-xl sm:text-2xl text-purple-300 font-semibold">
               {user?.role === 'admin'
                 ? `${calculateAge(angel?.dateOfBirth)} years`
                 : angel.address?.city}
@@ -154,7 +160,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
             <div className="flex items-center justify-between gap-3">
               {/* Stats Section */}
               {user?.role === 'admin' ? (
-                <div className="p-2 bg-gray-200 rounded-lg text-xs sm:text-sm text-gray-800 flex-1 max-h-32 overflow-y-auto">
+                <div className="p-2 bg-gray-200 rounded-lg text-xs sm:text-sm text-white flex-1 max-h-32 overflow-y-auto">
                   <span className="font-bold">New Angel Profile</span>
                   <div className="mt-1 space-y-1">
                     <div>
@@ -169,7 +175,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
                     </div>
                     <div>
                       <span className="font-bold">Bio: </span>
-                      <p className="text-xs text-gray-600 line-clamp-2">
+                      <p className="text-xs text-gray-300 line-clamp-2">
                         {angel?.bio}
                       </p>
                     </div>

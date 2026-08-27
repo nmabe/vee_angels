@@ -21,6 +21,8 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
   const [isMounted, setIsMounted] = React.useState(false)
   const { _id, username, address, profPicUrl } = angel
   const user = useSelector((state) => state.auth.user);
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'https://vee-angels.onrender.com'
 
   const dispatch = useDispatch()
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Fade()])
@@ -65,7 +67,7 @@ export default function ImageCarousel({ angel, handleLike, isLiked }) {
     formData.append('deviceId', deviceId)
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/angels/angels/setView/${angelId}/`,
+        `${API_URL}/api/angels/angels/setView/${angelId}/`,
         formData
       )
       if (res.data?.success) {

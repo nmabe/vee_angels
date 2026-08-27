@@ -9,11 +9,11 @@ export default function TermsPage() {
         meta: [
           { name: 'description', content: 'Vee Angels Terms & Conditions — governing use of the platform, payments, and user responsibilities.' },
           { property: 'og:title', content: 'Vee Angels - Terms & Conditions' },
-          { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+          { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
           { property: 'og:type', content: 'website' },
         ],
         link: [
-          { rel: 'canonical', href: 'https://veeangels.co.za/terms' }
+          { rel: 'canonical', href: 'https://www.veeangels.co.za/terms' }
         ],
         // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
         script: [
@@ -23,7 +23,7 @@ export default function TermsPage() {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Vee Angels',
-              url: 'https://veeangels.co.za/terms',
+              url: 'https://www.veeangels.co.za/terms',
             }),
           },
         ],

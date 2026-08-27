@@ -16,7 +16,9 @@ const allowedOrigin = [
   'https://localhost:5173/',
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://vee-angels.vercel.app'
+  'https://vee-angels.vercel.app',
+  'http://veeangels.co.za',
+  'https://veeangels.co.za',
 ]
 
 app.use(

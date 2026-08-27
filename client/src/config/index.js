@@ -6,6 +6,12 @@ export const signUpFormControl = [
         placeholder: 'Enter your username',
         contentType: 'input',
         type: 'text'
+    },{
+        name: 'email',
+        label: 'Email',
+        placeholder: 'Enter your email',
+        contentType: 'input',
+        type: 'email'
     },
     {
         name: 'password',

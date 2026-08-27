@@ -53,7 +53,7 @@ const AuthSignUp = () => {
         { property: 'og:type', content: 'website' },
       ],
       link: [
-        { rel: 'canonical', href: 'https://veeangels.co.za/auth/signUp' }
+        { rel: 'canonical', href: 'https://www.veeangels.co.za/auth/signUp' }
       ],
       // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
       script: [
@@ -63,7 +63,7 @@ const AuthSignUp = () => {
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             name: 'Vee Angels',
-            url: 'https://veeangels.co.za/auth/signUp',
+            url: 'https://www.veeangels.co.za/auth/signUp',
           }),
         },
       ],

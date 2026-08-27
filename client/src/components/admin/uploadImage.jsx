@@ -16,7 +16,9 @@ export default function UploadImage({
   imageLoadingState,
   multiple = true
 }) {
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'https://vee-angels.onrender.com';
 
   const isEmpty = (object) => {
     for (var i in object) {
@@ -54,7 +56,7 @@ export default function UploadImage({
         formData.append('avatars', file) // Append files under 'images' key
       })
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin/angels/uploadImage`,
+        `${API_URL}/api/admin/angels/uploadImage`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }

@@ -1,6 +1,10 @@
 @import url("assets/style/embla/base.css");
 @import url("assets/style/embla/embla.css");
 
+@import url('@fontsource/gugi');
+@import url('@fontsource-variable/comfortaa/wght.css');
+@import url('@fontsource/nosifer');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

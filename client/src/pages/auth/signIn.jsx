@@ -49,11 +49,11 @@ const AuthSignIn = () => {
         meta: [
           { name: 'description', content: 'Sign in to your Vee Angels account to access your personalized dashboard and manage your angel investments.' },
           { property: 'og:title', content: 'Sign In - Vee Angels' },
-          { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+          { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
           { property: 'og:type', content: 'website' },
         ],
         link: [
-          { rel: 'canonical', href: 'https://veeangels.co.za/auth/signIn' }
+          { rel: 'canonical', href: 'https://www.veeangels.co.za/auth/signIn' }
         ],
         // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
         script: [
@@ -63,7 +63,7 @@ const AuthSignIn = () => {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Vee Angels',
-              url: 'https://veeangels.co.za/auth/signIn',
+              url: 'https://www.veeangels.co.za/auth/signIn',
             }),
           },
         ],

@@ -40,7 +40,7 @@ ChartJS.register(
 )
 
 export default function DashboardAdminPage() {
-  const signUps = useSelector((state) => state.applications.applications)
+  const signUps = useSelector((state) => state.applications?.applications)
   const { angelsList } = useSelector((state) => state.adminAngel)
   const { users } = useSelector((state) => state.users)
   const reports = useSelector((state) => state.reports.reports.reports)
@@ -97,7 +97,7 @@ export default function DashboardAdminPage() {
     },
     { message: 'User Thulani FKP bookmarked an angel.', time: '4 hours ago' },
     { message: 'Angel Kabza received a new review.', time: '1 day ago' },
-    { message: 'Angel Zanele updated her profile.', time: '2 days ago' },
+    { message: 'Angel Madwebs updated her profile.', time: '2 days ago' },
     {
       message: 'User Sizwe sent a message to Angel Sophie.',
       time: '3 days ago'

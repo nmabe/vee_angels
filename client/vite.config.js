@@ -36,11 +36,12 @@ export default defineConfig(({ command, mode, isSsrBuild }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src')
+        '@': path.resolve(__dirname, './src'),
+   //     'react-router-dom': path.resolve(__dirname, 'node_modules/react-router-dom')
       }
     },
     ssr: {
-      noExternal: ['@unhead/react', 'unhead']
+      noExternal: ['@unhead/react', 'unhead'],
     },
     server: {
       host: '127.0.0.1', // Forces Vite dev server to use IPv4 loopback

@@ -25,11 +25,9 @@ import CookiesPage from './pages/cookies'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { authCheck } from './store/auth-slice'
-import '@fontsource/gugi'
-import '@fontsource-variable/comfortaa/wght.css'
-import '@fontsource/nosifer'
+import { Toaster } from '@/components/ui/sonner'
 
-function App() {
+export default function App() {
   const [hasHydrated, setHasHydrated] = useState(false)
   const dispatch = useDispatch()
   const { isAuthenticated, user, isLoading } = useSelector(
@@ -37,73 +35,66 @@ function App() {
   )
 
   useEffect(() => {
-    // Flag that we are past the initial client hydration phase
     setHasHydrated(true)
     dispatch(authCheck())
   }, [dispatch])
 
-  // 1. Until hydration is done, keep the values identical to the server defaults
-  const currentAuth = hasHydrated ? isAuthenticated : false
-  const currentUser = hasHydrated ? user : null
-  const showLoadingSkeleton = hasHydrated && isLoading && !user
-
-  // 2. Render LoadingSkeleton inside the shell if needed AFTER hydration
-  if (showLoadingSkeleton) {
-    return (
-      <div className="flex flex-col overflow-hidden">
-        <LoadingSkeleton />
-      </div>
-    )
-  }
+  // ALWAYS match the initial render to server defaults:
+  // On server: user is null, isAuthenticated is false, hasHydrated is false
+  const activeAuth = hasHydrated ? isAuthenticated : false
+  const activeUser = hasHydrated ? user : null
 
   return (
-    <div className="flex flex-col overflow-hidden">
-      <Routes>
-        <Route
-          element={
-            <CheckAuthentication
-              isAuthenticated={currentAuth}
-              user={currentUser}
-            />
-          }
-        >
-          {/* AUTH PATHS */}
-          <Route path="/auth" element={<AuthLayout />}>
-            <Route path="signIn" element={<AuthSignIn />} />
-            <Route path="signUp" element={<AuthSignUp />} />
-          </Route>
+      (hasHydrated && isLoading && !user) ? (
+        <LoadingSkeleton />
+      ) : (
+        <>
+        <Routes>
+          <Route
+            element={
+              <CheckAuthentication
+                isAuthenticated={activeAuth}
+                user={activeUser}
+              />
+            }
+          >
+            {/* AUTH PATHS */}
+            <Route path="/auth" element={<AuthLayout />}>
+              <Route path="signIn" element={<AuthSignIn />} />
+              <Route path="signUp" element={<AuthSignUp />} />
+            </Route>
 
-          {/* ADMIN PATHS */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="users" element={<UsersAdminPage />} />
-            <Route path="angels" element={<AngelsAdminPage />} />
-            <Route path="dashboard" element={<DashboardAdminPage />} />
-            <Route path="features" element={<FeaturesAdminPage />} />
-          </Route>
+            {/* ADMIN PATHS */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="users" element={<UsersAdminPage />} />
+              <Route path="angels" element={<AngelsAdminPage />} />
+              <Route path="dashboard" element={<DashboardAdminPage />} />
+              <Route path="features" element={<FeaturesAdminPage />} />
+            </Route>
 
-          {/* ANGELS PATHS */}
-          <Route path="/angels" element={<AngelsLayout />}>
-            <Route path="faves" element={<AngelsFavesPage />} />
-            <Route path="account" element={<AngelsAccountPage />} />
-            <Route path="checkout" element={<AngelsCheckoutPage />} />
-            <Route path="home" element={<AngelsHomePage />} />
-            <Route path="angels" element={<AngelsListingPage />} />
-            <Route path="applications" element={<AngelApplications />} />
-          </Route>
+            {/* ANGELS PATHS */}
+            <Route path="/angels" element={<AngelsLayout />}>
+              <Route path="faves" element={<AngelsFavesPage />} />
+              <Route path="account" element={<AngelsAccountPage />} />
+              <Route path="checkout" element={<AngelsCheckoutPage />} />
+              <Route path="home" element={<AngelsHomePage />} />
+              <Route path="angels" element={<AngelsListingPage />} />
+              <Route path="applications" element={<AngelApplications />} />
+            </Route>
 
-          {/* ROOT PATHS */}
-          <Route path="/" element={<AngelsLayout />}>
-            <Route path="privacy" element={<PrivacyPage />} />
-            <Route path="terms" element={<TermsPage />} />
-            <Route path="cookies" element={<CookiesPage />} />
-            <Route path="unauth-page" element={<UnauthPage />} />
-            <Route path="age-verification" element={<AgeVerificationPage />} />
-            <Route path="*" element={<PageNotFound />} />
+            {/* ROOT PATHS */}
+            <Route path="/" element={<AngelsLayout />}>
+              <Route path="privacy" element={<PrivacyPage />} />
+              <Route path="terms" element={<TermsPage />} />
+              <Route path="cookies" element={<CookiesPage />} />
+              <Route path="unauth-page" element={<UnauthPage />} />
+              <Route path="age-verification" element={<AgeVerificationPage />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </div>
+        </Routes>
+        {hasHydrated && <Toaster richColors={true} theme="system" />}
+        </>
+      )
   )
 }
-
-export default App

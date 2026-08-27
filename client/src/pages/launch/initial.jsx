@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { AlertCircle, Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -9,12 +9,16 @@ export default function AgeVerificationPage() {
   const [userConfirmed, setUserConfirmed] = useState(false)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (localStorage.getItem('ageVerified') === 'true') {
+      navigate('/angels/home')
+    }
+  }, [navigate]);
+
   const handleConfirmAge = () => {
     setUserConfirmed(true)
     localStorage.setItem('ageVerified', 'true')
-    setTimeout(() => {
-      navigate('/angels/home')
-    }, 1000)
+    navigate(0) // Refresh the page to re-evaluate authentication and age verification
   }
 
   const handleDeny = () => {

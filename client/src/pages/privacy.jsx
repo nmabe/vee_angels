@@ -9,11 +9,11 @@ export default function PrivacyPage() {
         meta: [
           { name: 'description', content: 'Vee Angels privacy practices: what we collect, how we use data, and how you can control your information.' },
           { property: 'og:title', content: 'Vee Angels - Privacy Policy' },
-          { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+          { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
           { property: 'og:type', content: 'website' },
         ],
         link: [
-          { rel: 'canonical', href: 'https://veeangels.co.za/privacy' }
+          { rel: 'canonical', href: 'https://www.veeangels.co.za/privacy' }
         ],
         // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
         script: [
@@ -23,7 +23,7 @@ export default function PrivacyPage() {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Vee Angels',
-              url: 'https://veeangels.co.za/privacy',
+              url: 'https://www.veeangels.co.za/privacy',
             }),
           },
         ],

@@ -127,11 +127,11 @@ const AngelsFavesPage = () => {
       meta: [
         { name: 'description', content: 'Discover your favorite angels on Vee Angels. Curated just for you, explore profiles, connect, and find the perfect angel to suit your needs.' },
         { property: 'og:title', content: 'Vee Angels - Your Favorite Angels' },
-        { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+        { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
         { property: 'og:type', content: 'website' },
       ],
       link: [
-        { rel: 'canonical', href: 'https://veeangels.co.za/angels/faves' }
+        { rel: 'canonical', href: 'https://www.veeangels.co.za/angels/faves' }
       ],
       // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
       script: [

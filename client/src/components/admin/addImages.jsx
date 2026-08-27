@@ -7,7 +7,9 @@ const AddImages = ({ angelId, onImagesAdded, multiple = true }) => {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
-  const inputRef = React.useRef(null)
+  const inputRef = React.useRef(null);
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'https://vee-angels.onrender.com';
 
   const isEmpty = (object) => {
     for (var i in object) {
@@ -49,7 +51,7 @@ const AddImages = ({ angelId, onImagesAdded, multiple = true }) => {
       }
 
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin/angels/uploadImage`,
+        `${API_URL}/api/admin/angels/uploadImage`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }

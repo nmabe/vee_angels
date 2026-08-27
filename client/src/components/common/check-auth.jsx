@@ -4,15 +4,16 @@ import { Navigate, useLocation, Outlet } from 'react-router-dom'
 function CheckAuthentication({ isAuthenticated, user }) {
   const location = useLocation()
   const [isMounted, setIsMounted] = useState(false)
-  const [ageVerified, setAgeVerified] = useState(null)
+  const [ageVerified, setAgeVerified] = useState(localStorage.getItem('ageVerified'))
 
+ // setAgeVerified(localStorage.getItem('ageVerified'))
   useEffect(() => {
-    setAgeVerified(localStorage.getItem('ageVerified'))
     setIsMounted(true)
+    setAgeVerified(localStorage.getItem('ageVerified'));
   }, [])
 
   // Avoid server/client markup mismatches during the initial hydration pass.
-  if (!isMounted) {
+  if (!isMounted ) {
     return null
   }
   // 🎂 Age verification check

@@ -3,11 +3,19 @@ import path from 'path'
 import http from 'http'
 import express from 'express'
 import { createServer as createViteServer } from 'vite'
-import { renderSSRHead } from '@unhead/react/server'
 import { fileURLToPath, pathToFileURL } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+/**
+ * Safely serialize state to prevent XSS injection
+ */
+function serializeState(preloadedState) {
+  return `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+    preloadedState || {}
+  ).replace(/</g, '\\u003c')}</script>`
+}
 
 async function startDevServer() {
   const app = express()
@@ -46,16 +54,19 @@ async function startDevServer() {
       template = await vite.transformIndexHtml(url, template)
 
       const { render } = await vite.ssrLoadModule('/src/entry-server.jsx')
-      const { html, stateScript, head } = await render(url)
-      const headPayload = await renderSSRHead(head)
+      const { appHtml, headPayload, preloadedState } = await render(url)
 
-      const templateWithApp = template
-        .replace('<!--app-html-->', html || '')
-        .replace('<!--app-state-->', `<script>${stateScript}</script>`)
-      const finalHtml = templateWithApp.replace(
-        '</head>',
-        `${headPayload.headTags || ''}</head>`
-      )
+      const stateScript = serializeState(preloadedState)
+
+      const finalHtml = template
+        .replace('<!--app-html-->', appHtml || '')
+        .replace(
+          '<!--head-tags-->',
+          `${headPayload?.headTags || ''}\n${stateScript}`
+        )
+        .replace('<!--html-attributes-->', headPayload?.htmlAttrs || '')
+        .replace('<!--body-attributes-->', headPayload?.bodyAttrs || '')
+        .replace('<!--body-tags-->', headPayload?.bodyTags || '')
 
       return res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml)
     } catch (e) {
@@ -80,9 +91,18 @@ async function startProductionServer() {
   const app = express()
   const distDir = path.resolve(__dirname, 'dist/client')
   const ssrEntryPath = path.resolve(__dirname, 'dist/server/entry-server.js')
-  const { render } = await import(pathToFileURL(ssrEntryPath).href)
 
-  app.use(express.static(distDir))
+  // 2. Fallback check before importing to throw a clear error message
+  if (!fs.existsSync(ssrEntryPath)) {
+    throw new Error(
+      `SSR bundle missing at ${ssrEntryPath}. Did you forget to run 'npm run build' before starting the production server?`
+    )
+  }
+
+  // 3. Convert absolute file path to a valid file:// URL for ESM dynamic import
+  const { render } = await import(pathToFileURL(ssrEntryPath).href)
+  // Serve static assets from dist/client without handling index.html automatically
+  app.use(express.static(distDir, { index: false }))
 
   app.get('/api/v1/health', (req, res) => {
     res.json({ status: 'healthy', timestamp: new Date() })
@@ -103,15 +123,22 @@ async function startProductionServer() {
     try {
       const templatePath = path.join(distDir, 'index.html')
       let template = fs.readFileSync(templatePath, 'utf-8')
-      const { html, stateScript, head } = await render(req.originalUrl)
-      const headPayload = await renderSSRHead(head)
-      const templateWithApp = template
-        .replace('<!--app-html-->', html || '')
-        .replace('<!--app-state-->', `<script>${stateScript}</script>`)
-      const finalHtml = templateWithApp.replace(
-        '</head>',
-        `${headPayload.headTags || ''}</head>`
+
+      const { appHtml, headPayload, preloadedState } = await render(
+        req.originalUrl
       )
+
+      const stateScript = serializeState(preloadedState)
+
+      const finalHtml = template
+        .replace('<!--app-html-->', appHtml || '')
+        .replace(
+          '<!--head-tags-->',
+          `${headPayload?.headTags || ''}\n${stateScript}`
+        )
+        .replace('<!--html-attributes-->', headPayload?.htmlAttrs || '')
+        .replace('<!--body-attributes-->', headPayload?.bodyAttrs || '')
+        .replace('<!--body-tags-->', headPayload?.bodyTags || '')
 
       return res.status(200).set({ 'Content-Type': 'text/html' }).end(finalHtml)
     } catch (e) {

@@ -81,23 +81,6 @@ export const LoadingSkeletonGrid = () => {
 
 export const LoadingSkeleton = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const baseId = useId(); // Guarantees identical unique IDs across Server & Client
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-      <div className="w-full max-w-md px-4">
-        <Skeleton />
-      </div>
-    </div>
-  );
-};
-
-export const LoadingSkeletonJakaranda = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const baseId = useId(); 
 
   useEffect(() => {

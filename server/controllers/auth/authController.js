@@ -44,7 +44,6 @@ const signInUser = async (req, res) => {
             process.env.JWT_USER_TOKEN,
             {expiresIn: '60m'}
         );
-            console.log('Nou Ziya Khala: ', user.username);
 
         res.cookie("token", token, {
                     httpOnly: true,

@@ -52,7 +52,7 @@ export const uploadUserImage = createAsyncThunk(
   '/user/uploadProfilePic/',
   async ({ formData, id }) => {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/user/uploadProfilePic/${id}/`,
+      `${API_URL}/api/user/uploadProfilePic/${id}/`,
       formData,
       {
         withCredentials: true,

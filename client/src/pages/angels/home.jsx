@@ -65,11 +65,11 @@ export default function AngelsHomePage() {
     meta: [
       { name: 'description', content: 'Connect with trusted, caring professionals dedicated to providing exceptional service. Find the perfect angel for your needs today.' },
       { property: 'og:title', content: 'Vee Angels - Find Your Perfect Angel' },
-      { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+      { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
       { property: 'og:type', content: 'website' },
     ],
     link: [
-      { rel: 'canonical', href: 'https://veeangels.co.za/' }
+      { rel: 'canonical', href: 'https://www.veeangels.co.za/' }
     ],
     // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
     script: [
@@ -79,7 +79,7 @@ export default function AngelsHomePage() {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
           name: 'Vee Angels',
-          url: 'https://veeangels.co.za/',
+          url: 'https://www.veeangels.co.za/',
         }),
       },
     ],

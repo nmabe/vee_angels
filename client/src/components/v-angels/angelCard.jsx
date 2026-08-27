@@ -202,13 +202,13 @@ export const AngelCard = ({ userId = 0, angel, likes }) => {
                 </span>
                 {calculateAge(dateOfBirth)}
               </li>
-              <li>
+             {/* <li>
                 <span className="font-bold">
                   <CircleDollarSign className="inline w-[15px] h-[15px] mr-1" />
                   Price:{' '}
                 </span>
                 R{price}
-              </li>
+              </li>*/ }
               <li>
                 <span className="font-bold">
                   <MapPinned className="inline w-[15px] h-[15px] mr-1" />

@@ -130,11 +130,11 @@ export default function AngelApplications() {
         meta: [
           { name: `description', content: 'Apply to join our trusted community of caregivers and make a real difference in people's lives.` },
           { property: 'og:title', content: 'Vee Angels - Apply to be an Angel' },
-          { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+          { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
           { property: 'og:type', content: 'website' },
         ],
         link: [
-          { rel: 'canonical', href: 'https://veeangels.co.za/angels/applications' }
+          { rel: 'canonical', href: 'https://www.veeangels.co.za/angels/applications' }
         ],
         // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
         script: [
@@ -144,7 +144,7 @@ export default function AngelApplications() {
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Vee Angels',
-              url: 'https://veeangels.co.za/angels/applications',
+              url: 'https://www.veeangels.co.za/angels/applications',
             }),
           },
         ],

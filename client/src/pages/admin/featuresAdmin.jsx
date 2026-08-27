@@ -55,10 +55,12 @@ const activities = [
 ]
 
 export default function FeaturesAdminPage() {
-  const newAngels = useSelector((state) => state.applications.applications)
+  const newAngels = useSelector((state) => state.applications?.applications)
   const dispatch = useDispatch()
   const [reportList, setReportList] = useState([])
   const messages = useSelector((state) => state.contact.messages)
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'https://vee-angels.onrender.com'
 
   useEffect(() => {
     dispatch(getApplications())
@@ -134,7 +136,7 @@ export default function FeaturesAdminPage() {
     // Add backend call here to reset views
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/angels/angels/resetView/`,
+        `${API_URL}/api/angels/angels/resetView/`,
         {
           method: 'POST',
           headers: {

@@ -149,11 +149,11 @@ const AngelsListingPage = () => {
       meta: [
         { name: 'description', content: 'Connect with trusted, caring professionals dedicated to providing exceptional service. Find the perfect angel for your needs today.' },
         { property: 'og:title', content: 'Vee Angels - Find Your Perfect Angel' },
-        { property: 'og:image', content: 'https://veeangels.co.za/images/og-image.png' },
+        { property: 'og:image', content: 'https://www.veeangels.co.za/images/og-image.png' },
         { property: 'og:type', content: 'website' },
       ],
       link: [
-        { rel: 'canonical', href: 'https://veeangels.co.za/angels/listing' }
+        { rel: 'canonical', href: 'https://www.veeangels.co.za/angels/listing' }
       ],
       // Structured Data (JSON-LD) support without dangerouslySetInnerHTML
       script: [
@@ -163,7 +163,7 @@ const AngelsListingPage = () => {
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             name: 'Vee Angels',
-            url: 'https://veeangels.co.za/angels/listing',
+            url: 'https://www.veeangels.co.za/angels/listing',
           }),
         },
       ],

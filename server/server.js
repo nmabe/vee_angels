@@ -19,6 +19,8 @@ const allowedOrigin = [
   'https://vee-angels.vercel.app',
   'http://veeangels.co.za',
   'https://veeangels.co.za',
+  'http://www.veeangels.co.za',
+  'https://www.veeangels.co.za',
 ]
 
 app.use(

@@ -47,9 +47,9 @@ const signInUser = async (req, res) => {
 
         res.cookie("token", token, {
                     httpOnly: true,
-                    secure: true,
-                    sameSite: 'none',
-                    maxAge: 3600000 
+                    secure: process.env.NODE_ENV === 'production', // MUST be true in production (HTTPS)
+                    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' allows cross-site cookies over HTTPS
+                    maxAge: 7 * 24 * 60 * 60 * 10000 
                 }).json({
                 success: true,
                 message: `Welcome back ${user.username}`,

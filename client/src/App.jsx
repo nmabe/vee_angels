@@ -26,6 +26,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { authCheck } from './store/auth-slice'
 import { Toaster } from '@/components/ui/sonner'
+import { Analytics } from '@vercel/analytics/react'
 
 export default function App() {
   const [hasHydrated, setHasHydrated] = useState(false)
@@ -94,6 +95,7 @@ export default function App() {
           </Route>
         </Routes>
         {hasHydrated && <Toaster richColors={true} theme="system" />}
+        <Analytics />
         </>
       )
   )
